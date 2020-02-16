@@ -215,7 +215,7 @@ class LoginPage extends Component {
                         {/*<Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>*/}
                             {/*<FormattedMessage id="app.login.remember-me"/>*/}
                         {/*</Checkbox>*/}
-                        <Link to="/user/register">
+                        <Link to="/user/forgetPassword">
                             <FormattedMessage id="app.login.forgot-password"/>
                         </Link>
                     </div>
