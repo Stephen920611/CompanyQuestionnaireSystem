@@ -69,7 +69,7 @@ class CompanyStatisticsEdit extends PureComponent {
             currentInfo: {},
             member: {},
             touch: [],
-            isCreate:true,
+            isCreate: true,
 
 
         }
@@ -101,9 +101,9 @@ class CompanyStatisticsEdit extends PureComponent {
             }
         });*/
 
-        if (location.hasOwnProperty("params") && location["params"].hasOwnProperty("data")&&location["params"].hasOwnProperty("status")) {
+        if (location.hasOwnProperty("params") && location["params"].hasOwnProperty("data") && location["params"].hasOwnProperty("status")) {
             this.setState({
-                isCreate:location["params"]["status"],
+                isCreate: location["params"]["status"],
             })
 
             //查看详情
@@ -151,7 +151,7 @@ class CompanyStatisticsEdit extends PureComponent {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let userId = loginInfo.data.id;
-                console.log(values,'values');
+                console.log(values, 'values');
                 let params = {
                     member: {
                         area: values.area,	//县市区名字
@@ -161,37 +161,37 @@ class CompanyStatisticsEdit extends PureComponent {
                         nativePlace: T.lodash.isUndefined(values.nativePlace) ? '' : values.nativePlace,
                         address: T.lodash.isUndefined(values.address) ? '' : values.address,
                         idCard: T.lodash.isUndefined(values.idCard) ? '' : values.idCard,
-                        phoneNum:T.lodash.isUndefined(values.phoneNum) ? '' : values.phoneNum,
-                        baseInfo:T.lodash.isUndefined(values.baseInfo) ? '' : values.baseInfo,	//名字
+                        phoneNum: T.lodash.isUndefined(values.phoneNum) ? '' : values.phoneNum,
+                        baseInfo: T.lodash.isUndefined(values.baseInfo) ? '' : values.baseInfo,	//名字
                         fillUserId: userId,  //后端返回
                         id: location["params"]["data"]["id"]
                     },
                     memberActivity: {
                         backFromWhere: T.lodash.isUndefined(values.backFromWhere) ? '' : values.backFromWhere,
-                        backTime: T.lodash.isUndefined(values.backTime) ? '' : (values.backTime === null || values.backTime === '') ? '': T.helper.dateFormat(values.backTime),
-                        backType:T.lodash.isUndefined(values.backType) ? '' : values.backType,
-                        carNum:T.lodash.isUndefined(values.carNum) ? '' : values.carNum,
-                        wayCity:T.lodash.isUndefined(values.wayCity) ? '' : values.wayCity,
+                        backTime: T.lodash.isUndefined(values.backTime) ? '' : (values.backTime === null || values.backTime === '') ? '' : T.helper.dateFormat(values.backTime),
+                        backType: T.lodash.isUndefined(values.backType) ? '' : values.backType,
+                        carNum: T.lodash.isUndefined(values.carNum) ? '' : values.carNum,
+                        wayCity: T.lodash.isUndefined(values.wayCity) ? '' : values.wayCity,
                         fillUserId: userId  //后端返回
                     },
                     memberTouch: {
                         isTouchSuspect: T.lodash.isUndefined(values.isTouchSuspect) ? '' : values.isTouchSuspect,	  //是否
-                        suspectName:T.lodash.isUndefined(values.suspectName) ? '' : values.suspectName,
-                        suspectIdCard:T.lodash.isUndefined(values.suspectIdCard) ? '' : values.suspectIdCard,
-                        suspectTime: T.lodash.isUndefined(values.suspectTime) ? '' : (values.suspectTime === null || values.suspectTime === '') ? '': T.helper.dateFormat(values.suspectTime),
-                        suspectPoint:T.lodash.isUndefined(values.suspectPoint) ? '' : values.suspectPoint,
+                        suspectName: T.lodash.isUndefined(values.suspectName) ? '' : values.suspectName,
+                        suspectIdCard: T.lodash.isUndefined(values.suspectIdCard) ? '' : values.suspectIdCard,
+                        suspectTime: T.lodash.isUndefined(values.suspectTime) ? '' : (values.suspectTime === null || values.suspectTime === '') ? '' : T.helper.dateFormat(values.suspectTime),
+                        suspectPoint: T.lodash.isUndefined(values.suspectPoint) ? '' : values.suspectPoint,
 
                         isTouchIntimate: T.lodash.isUndefined(values.isTouchIntimate) ? '' : values.isTouchIntimate,	  //是否
-                        intimateName:T.lodash.isUndefined(values.intimateName) ? '' : values.intimateName,
-                        intimateIdCard:T.lodash.isUndefined(values.intimateIdCard) ? '' : values.intimateIdCard,
-                        intimateTime: T.lodash.isUndefined(values.intimateTime) ? '' : (values.intimateTime === null || values.intimateTime === '') ? '': T.helper.dateFormat(values.intimateTime),
-                        intimatePoint:T.lodash.isUndefined(values.intimatePoint) ? '' : values.intimatePoint,
+                        intimateName: T.lodash.isUndefined(values.intimateName) ? '' : values.intimateName,
+                        intimateIdCard: T.lodash.isUndefined(values.intimateIdCard) ? '' : values.intimateIdCard,
+                        intimateTime: T.lodash.isUndefined(values.intimateTime) ? '' : (values.intimateTime === null || values.intimateTime === '') ? '' : T.helper.dateFormat(values.intimateTime),
+                        intimatePoint: T.lodash.isUndefined(values.intimatePoint) ? '' : values.intimatePoint,
 
                         isTouchInfector: T.lodash.isUndefined(values.isTouchInfector) ? '' : values.isTouchInfector,	  //是否
-                        infectorName:T.lodash.isUndefined(values.infectorName) ? '' : values.infectorName,
-                        infectorIdCard:T.lodash.isUndefined(values.infectorIdCard) ? '' : values.infectorIdCard,
-                        infectorTime: T.lodash.isUndefined(values.infectorTime) ? '' : (values.infectorTime === null || values.infectorTime === '') ? '': T.helper.dateFormat(values.infectorTime),
-                        infectorPoint:T.lodash.isUndefined(values.infectorPoint) ? '' : values.infectorPoint,
+                        infectorName: T.lodash.isUndefined(values.infectorName) ? '' : values.infectorName,
+                        infectorIdCard: T.lodash.isUndefined(values.infectorIdCard) ? '' : values.infectorIdCard,
+                        infectorTime: T.lodash.isUndefined(values.infectorTime) ? '' : (values.infectorTime === null || values.infectorTime === '') ? '' : T.helper.dateFormat(values.infectorTime),
+                        infectorPoint: T.lodash.isUndefined(values.infectorPoint) ? '' : values.infectorPoint,
 
                         fillUserId: userId  //后端返回
                     },
@@ -199,9 +199,9 @@ class CompanyStatisticsEdit extends PureComponent {
                         bodyCondition: T.lodash.isUndefined(values.bodyCondition) ? '' : values.bodyCondition,	//名字
                         hasSeek: T.lodash.isUndefined(values.hasSeek) ? '' : values.hasSeek,	//名字
                         seekHospital: T.lodash.isUndefined(values.seekHospital) ? '' : values.seekHospital,	//名字
-                        seekTime: T.lodash.isUndefined(values.seekTime) ? '' : (values.seekTime === null || values.seekTime === '') ? '': T.helper.dateFormat(values.seekTime),	//名字
+                        seekTime: T.lodash.isUndefined(values.seekTime) ? '' : (values.seekTime === null || values.seekTime === '') ? '' : T.helper.dateFormat(values.seekTime),	//名字
                         controlMeasures: T.lodash.isUndefined(values.controlMeasures) ? '' : values.controlMeasures,	//名字
-                        controlTime: T.lodash.isUndefined(values.controlTime) ? '' : (values.controlTime === null || values.controlTime === '') ? '': T.helper.dateFormat(values.controlTime),	//名字
+                        controlTime: T.lodash.isUndefined(values.controlTime) ? '' : (values.controlTime === null || values.controlTime === '') ? '' : T.helper.dateFormat(values.controlTime),	//名字
                         nextMeasures: T.lodash.isUndefined(values.nextMeasures) ? '' : values.nextMeasures,	//名字
                         fillUserId: userId  //后端返回
                     },
@@ -231,8 +231,8 @@ class CompanyStatisticsEdit extends PureComponent {
     //验证年龄
     checkAge = (rule, value, callback) => {
         // const { getFieldValue } = this.props.form;
-        let reg=/^(?:[0-9][0-9]?|1[01][0-9]|200)$/;//年龄是0-200之间有
-        if(!reg.test(value) && value !== null){
+        let reg = /^(?:[0-9][0-9]?|1[01][0-9]|200)$/;//年龄是0-200之间有
+        if (!reg.test(value) && value !== null) {
             callback("年龄输入不合法！");
             return;
         }
@@ -249,9 +249,10 @@ class CompanyStatisticsEdit extends PureComponent {
     renderSelect = (dataSource, isArea = false) => {
         let loginInfo = T.auth.getLoginInfo();
         return (
-            dataSource.map((item,idx) => {
+            dataSource.map((item, idx) => {
                 return (
-                    <Option key={idx} value={item.name} disabled={isArea ? loginInfo.data.area === item.name ? false : true : false}>
+                    <Option key={idx} value={item.name}
+                            disabled={isArea ? loginInfo.data.area === item.name ? false : true : false}>
                         {item.name}
                     </Option>
                 )
@@ -396,16 +397,16 @@ class CompanyStatisticsEdit extends PureComponent {
         const breadcrumbDetail = [
             {
                 linkTo: '/companyStatistics',
-                name: '企业信息填报管理',
+                name: '开工企业评定管理',
             },
             {
-                name: isCreate?'新建企业信息填报':'编辑企业信息填报',
+                name: isCreate ? '新建企业评定' : '编辑企业评定',
             },
         ];
 
         return (
             <PageHeaderWrapper
-                title={ isCreate ? '新建企业信息填报':'编辑企业信息填报'}
+                title={isCreate ? '新建企业评定' : '编辑企业评定'}
                 isSpecialBreadcrumb={true}
                 breadcrumbName={<CustomBreadcrumb dataSource={breadcrumbDetail}/>}
             >
@@ -415,43 +416,12 @@ class CompanyStatisticsEdit extends PureComponent {
                             onSubmit={this.onSubmitData}
                             hideRequiredMark
                         >
-                            <div className={styles.detailTitleName}>
-                                企业基本信息
-                            </div>
                             <Card
                                 style={{marginBottom: 20}}
                                 loading={fetchStatus}
                             >
                                 <Row className={styles.detailTitle}>
-                                   {/* <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='县市区：'
-                                        >
-                                            {getFieldDecorator('area', {
-                                                    rules: [
-                                                        {
-                                                            required: true,
-                                                            message: "请选择县市区",
-                                                        },
-                                                    ],
-                                                    initialValue: T.auth.getLoginInfo().data.area
-                                                }
-                                            )(
-                                                <Select
-                                                    // onChange={this.onChangeConnectionUrl.bind(this, "dataOrigin", "connectionUrl")}
-                                                    // onSelect={this.selectDataSource.bind(this, 'FTP')}
-                                                    getPopupContainer={triggerNode => triggerNode.parentNode}
-                                                    placeholder="请选择县市区"
-                                                >
-                                                    {
-                                                        this.renderSelect(areaSelect, true)
-                                                    }
-                                                </Select>
-                                            )}
-                                        </Form.Item>
-                                    </Col>*/}
-                                    <Col span={6} className={styles.detailBtns}>
+                                    <Col span={8} className={styles.detailBtns}>
                                         <Form.Item
                                             {...formItemLayout}
                                             label='企业名称：'
@@ -472,373 +442,26 @@ class CompanyStatisticsEdit extends PureComponent {
                                             )}
                                         </Form.Item>
                                     </Col>
-                                    <Col span={6}>
+                                </Row>
+                                <Row className={styles.detailTitle}>
+                                    <Col span={8} className={styles.detailBtns}>
                                         <Form.Item
-                                            {...formItemLayout}
-                                            label='法人代表：'
+                                            label='评定等级'
                                         >
-                                            {getFieldDecorator('age', {
+                                            {getFieldDecorator('degree', {
                                                 rules: [
                                                     {
                                                         required: false,
-                                                        message: "请输入法人代表",
+                                                        message: '请选择评定等级'
                                                     },
-                                                    {
-                                                        validator: this.checkAge
-                                                    }
                                                 ],
+                                                // initialValue: T.moment(new Date().getTime()-24*60*60*1000),
                                             })(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入法人代表"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='填报人：'
-                                        >
-                                            {getFieldDecorator('age1', {
-                                                rules: [
-                                                    {
-                                                        required: false,
-                                                        message: "请输入填报人",
-                                                    },
-                                                    {
-                                                        validator: this.checkAge
-                                                    }
-                                                ],
-                                            })(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入填报人"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='联系电话：'
-                                        >
-                                            {getFieldDecorator('age2', {
-                                                rules: [
-                                                    {
-                                                        required: false,
-                                                        message: "请输入联系电话",
-                                                    },
-                                                    {
-                                                        validator: this.checkAge
-                                                    }
-                                                ],
-                                            })(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入联系电话"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    {/*<Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='填报人：'
-                                        >
-                                            {getFieldDecorator('gender', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请选择填报人",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
                                                 <Radio.Group >
-                                                    <Radio value={"男"}>男</Radio>
-                                                    <Radio value={"女"}>女</Radio>
+                                                    <Radio value={"A"}>A</Radio>
+                                                    <Radio value={"B"}>B</Radio>
+                                                    <Radio value={"C"}>C</Radio>
                                                 </Radio.Group>
-                                            )}
-                                        </Form.Item>
-                                    </Col>*/}
-                                </Row>
-                                <Row className={styles.detailTitle}>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='员工人数：'
-                                        >
-                                            {getFieldDecorator('nativePlace', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请输入员工人数",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入员工人数"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6} className={styles.detailBtns}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='今日上岗人数：'
-                                        >
-                                            {getFieldDecorator('address', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请输入今日上岗人数",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入今日上岗人数"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6} className={styles.detailBtns}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='填报时间：'
-                                        >
-                                            {getFieldDecorator('backTime', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请选择填报时间",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <DatePicker showTime={true}/>
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-
-                            </Card>
-                            <div className={styles.detailTitleName}>
-                                防控信息
-                            </div>
-                            <Card
-                                style={{marginBottom: 20}}
-                                loading={fetchStatus}
-                            >
-                                <Row className={styles.detailTitle}>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='口罩库存(个)：'
-                                        >
-                                            {getFieldDecorator('backFromWhere', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请输入口罩库存",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入口罩库存"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='消毒液库存(公斤)：'
-                                        >
-                                            {getFieldDecorator('backFromWhere1', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请输入消毒液库存",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Input
-                                                    autoComplete="off"
-                                                    placeholder="请输入口罩库存"
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6} className={styles.detailBtns}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='今日是否对厂区进行了两次消毒：'
-                                        >
-                                            {getFieldDecorator('backTime', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请选择来烟(返烟)时间",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Radio.Group >
-                                                    <Radio value={1}>是</Radio>
-                                                    <Radio value={0}>否</Radio>
-                                                </Radio.Group>
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.detailTitle}>
-                                    <Col span={6} className={styles.detailBtns}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='今日是否落实食堂防疫措施：'
-                                        >
-                                            {getFieldDecorator('backTime1', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请选择今日是否落实食堂防疫措施",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Radio.Group >
-                                                    <Radio value={1}>是</Radio>
-                                                    <Radio value={0}>否</Radio>
-                                                </Radio.Group>
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={6} className={styles.detailBtns}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='今日是否落实宿舍（出租屋、工棚）防疫措施：'
-                                        >
-                                            {getFieldDecorator('backTime2', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "请选择今日是否落实宿舍（出租屋、工棚）防疫措施",
-                                                        },
-                                                    ],
-                                                }
-                                            )(
-                                                <Radio.Group >
-                                                    <Radio value={1}>是</Radio>
-                                                    <Radio value={0}>否</Radio>
-                                                </Radio.Group>
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-
-                                </Row>
-                            </Card>
-                            <div className={styles.detailTitleName}>
-                                重点人员统计
-                            </div>
-                            <Card
-                                style={{marginBottom: 20}}
-                                loading={fetchStatus}
-                            >
-                                <Row className={styles.detailTitle}>
-                                    <Col span={12}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='2月2日之后抵烟人员：'
-                                        >
-                                            {getFieldDecorator('suspectName1', {
-                                                }
-                                            )(
-                                                <Input
-                                                    disabled
-                                                    autoComplete="off"
-                                                    placeholder="请输入2月2日之后抵烟人员"
-
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='与确诊、疑似病例有过密切接触的人数：'
-                                        >
-                                            {getFieldDecorator('suspectName2', {
-                                                }
-                                            )(
-                                                <Input
-                                                    disabled
-                                                    autoComplete="off"
-                                                    placeholder="请输入与确诊、疑似病例有过密切接触的人数"
-
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.detailTitle}>
-                                    <Col span={12}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='与重点疫区人员有过接触的人数：'
-                                        >
-                                            {getFieldDecorator('suspectName3', {
-                                                }
-                                            )(
-                                                <Input
-                                                    disabled
-                                                    autoComplete="off"
-                                                    placeholder="请输入与重点疫区人员有过接触的人数"
-
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='与密切接触者有过共同生活、工作、学习、聚会的人数：'
-                                        >
-                                            {getFieldDecorator('suspectName4', {
-                                                }
-                                            )(
-                                                <Input
-                                                    disabled
-                                                    autoComplete="off"
-                                                    placeholder="请输入与密切接触者有过共同生活、工作、学习、聚会的人数"
-
-                                                />
-                                            )}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row className={styles.detailTitle}>
-                                    <Col span={12}>
-                                        <Form.Item
-                                            {...formItemLayout}
-                                            label='身体状况异常人数：'
-                                        >
-                                            {getFieldDecorator('suspectIdCard', {
-                                                }
-                                            )(
-                                                <Input
-                                                    disabled
-                                                    autoComplete="off"
-                                                    placeholder="请输入身体状况异常人数"
-
-                                                />
                                             )}
                                         </Form.Item>
                                     </Col>
@@ -847,23 +470,27 @@ class CompanyStatisticsEdit extends PureComponent {
                                     <Col span={24}>
                                         <Form.Item
                                             {...formItemLayout}
-                                            label='对发现的重点人群采取的措施（具体到什么人、什么情况，采取了什么措施）：'
+                                            label='存在的问题及整改要求：'
                                         >
-                                            {getFieldDecorator('wayCity', {
-
-                                                }
+                                            {getFieldDecorator('wayCity', {}
                                             )(
                                                 <TextArea
-                                                    placeholder="请填写对发现的重点人群采取的措施（具体到什么人、什么情况，采取了什么措施）"
+                                                    placeholder="请填写存在的问题及整改要求"
                                                     autoSize={{minRows: 3, maxRows: 6}}
                                                 />
                                             )}
                                         </Form.Item>
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <div>
+                                        注：A级为合格，企业防控措施到位，可以继续生产经营；B级为基本合格，但存在问题需限期整改，整改不到位的予以关停；C级为不合格，企业须停业整顿，待整改完成、评定合格后方可复工。
+                                    </div>
+                                </Row>
 
                             </Card>
-                            <FormItem {...submitFormLayout} style={{marginTop: 32, paddingBottom: 24,textAlign:'center'}}>
+                            <FormItem {...submitFormLayout}
+                                      style={{marginTop: 32, paddingBottom: 24, textAlign: 'center'}}>
                                 <Button
                                     style={{marginLeft: 16}}
                                     type="primary"

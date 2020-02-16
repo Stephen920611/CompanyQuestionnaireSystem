@@ -25,7 +25,7 @@ export default [
         Routes: ['src/pages/Authorized'],
         routes: [
             // dashboard
-            {path: '/', redirect: '/jobStatistics', authority: ['admin']},
+            {path: '/', redirect: '/checkRecord', authority: ['admin']},
             /*----------------- 首页 -------------------*/
             // {
             //     path: '/dashboard',
@@ -35,19 +35,19 @@ export default [
             // },
 
             /*----------------- 行业健康信息填报统计 -------------------*/
-            {
+           /* {
                 path: '/jobStatistics',
                 name: 'jobStatistics',
                 icon: 'home',
                 component: './JobStatistics/JobStatisticsList',
                 authority: ['admin']
-            },
+            },*/
            /* {
                 path: '/checkRecord/showDetail',
                 component: './CheckRecord/CheckRecordDetail',
                 authority: ['admin']
             },*/
-            /*----------------- 行业健康信息填报查询 -------------------*/
+            /*----------------- 企业问卷调查 -------------------*/
             {
                 path: '/checkRecord',
                 name: 'checkRecord',
@@ -60,7 +60,7 @@ export default [
                 component: './CheckRecord/CheckRecordDetail',
                 authority: ['admin']
             },
-            /*----------------- 企业信息填报查询类列表页 -------------------*/
+            /*----------------- 开工企业评定管理 -------------------*/
             {
                 path: '/companyStatistics',
                 name: 'companyStatistics',
@@ -79,23 +79,23 @@ export default [
                 authority: ['admin']
             },
             /*----------------- 企业信息填报统计 -------------------*/
-            {
+            /*{
                 path: '/totalStatistics',
                 name: 'totalStatistics',
                 icon: 'home',
                 component: './TotalStatistics/TotalStatistics',
                 authority: ['admin']
-            },
+            },*/
             /*----------------- 工业企业填报 -------------------*/
-            {
+            /*{
                 path: '/industrialReport',
                 name: 'industrialReport',
                 icon: 'home',
                 component: './IndustrialReport/IndustrialReport',
                 authority: ['admin']
-            },
+            },*/
             /*----------------- 工业企业管理 -------------------*/
-            {
+            /*{
                 path: '/industrialManage',
                 name: 'industrialManage',
                 icon: 'home',
@@ -106,7 +106,7 @@ export default [
                 path: '/industrialManage/showDetail',
                 component: './IndustrialManage/IndustrialManageDetail',
                 authority: ['admin']
-            },
+            },*/
 
 
 

@@ -30,13 +30,26 @@ const EnumAPI = {
 	 |----------------------------------------------------------------
 	 */
     login: _processAPI('login'), // 登录
+    /*
+    |----------------------------------------------------------------
+    | 统一树的接口-开工企业评定管理
+    |----------------------------------------------------------------
+    */
+    fetchTreeNode: _processAPI('/tree/area-tree'), //获取树接口
+    fetchCompanyStatistics: _processAPI(''), //获取开工企业评定列表
+    deleteCompanyInfo: _processAPI(''), //删除企业填报
+    updateCompanyInfo: _processAPI(''), //同步某个企业填报
+    fetchCompanyDetailById: _processAPI('/stat/list-data'), //查看详情
+    fetchCompanyPersonNumber: _processAPI('/stat/list-data'), //获取重点人员统计
+
+
+
 
     /*
     |----------------------------------------------------------------
     | 连-h5-统一树的接口-相关的API地址
     |----------------------------------------------------------------
     */
-    fetchTreeNode: _processAPI('/tree/area-tree'), //获取树接口
     fetchTreeDepartment: _processAPI('/tree/area-tree-department'), //根据公司id,查询部门树
     searchTreeCompany: _processAPI('/tree/search-tree-company'), //模糊搜索公司
     searchTreeDepartment: _processAPI('/tree/search-tree-department'), //模糊搜索部门
@@ -73,11 +86,7 @@ const EnumAPI = {
       |----------------------------------------------------------------
       */
     // exportStatInfo: _processAPI('/stat/export-stat-info'), //GET 导出统计信息根据公司id
-    fetchCompanyStatistics: _processAPI('/stat/list-data'), //统计查询
-    deleteCompanyInfo: _processAPI(''), //删除企业填报
-    updateCompanyInfo: _processAPI(''), //同步某个企业填报
-    fetchCompanyDetailById: _processAPI('/stat/list-data'), //查看详情
-    fetchCompanyPersonNumber: _processAPI('/stat/list-data'), //获取重点人员统计
+
 
 
     /*

@@ -58,132 +58,15 @@ class CompanyStatistics extends PureComponent {
         selectedArea: '烟台市',//树节点默认选中的地区名字，用来后台获取参数
         clickTree: [],  //点击的当前树
         tableData: [],  //表格数据
-        treeData: [
-            {
-                children: [
-                    {
-                        id: "GA001",
-                        key: "GA001",
-                        name: "芝罘区",
-                        pId: "GA",
-                        title: "芝罘区",
-                    },
-                    {
-                        id: "GA002",
-                        key: "GA002",
-                        name: "福山区",
-                        pId: "GA",
-                        title: "福山区",
-                    },
-                    {
-                        id: "GA003",
-                        key: "GA003",
-                        name: "莱山区",
-                        pId: "GA",
-                        title: "莱山区",
-                    },
-                    {
-                        id: "GA004",
-                        key: "GA004",
-                        name: "牟平区",
-                        pId: "GA",
-                        title: "牟平区",
-                    },
-                    {
-                        id: "GA005",
-                        key: "GA005",
-                        name: "海阳市",
-                        pId: "GA",
-                        title: "海阳市",
-                    },
-                    {
-                        id: "GA006",
-                        key: "GA006",
-                        name: "莱阳市",
-                        pId: "GA",
-                        title: "莱阳市",
-                    },
-                    {
-                        id: "GA007",
-                        key: "GA007",
-                        name: "栖霞市",
-                        pId: "GA",
-                        title: "栖霞市",
-                    },
-                    {
-                        id: "GA008",
-                        key: "GA008",
-                        name: "蓬莱市",
-                        pId: "GA",
-                        title: "蓬莱市",
-                    },
-                    {
-                        id: "GA009",
-                        key: "GA009",
-                        name: "长岛县",
-                        pId: "GA",
-                        title: "长岛县",
-                    },
-                    {
-                        id: "GA010",
-                        key: "GA010",
-                        name: "龙口市",
-                        pId: "GA",
-                        title: "龙口市",
-                    },
-                    {
-                        id: "GA011",
-                        key: "GA011",
-                        name: "招远市",
-                        pId: "GA",
-                        title: "招远市",
-                    },
-                    {
-                        id: "GA012",
-                        key: "GA012",
-                        name: "莱州市",
-                        pId: "GA",
-                        title: "莱州市",
-                    },
-                    {
-                        id: "GA013",
-                        key: "GA013",
-                        name: "开发区",
-                        pId: "GA",
-                        title: "开发区",
-                    },
-                    {
-                        id: "GA014",
-                        key: "GA014",
-                        name: "高新区",
-                        pId: "GA",
-                        title: "高新区",
-                    },
-                    {
-                        id: "GA015",
-                        key: "GA015",
-                        name: "保税港区",
-                        pId: "GA",
-                        title: "保税港区",
-                    },
-                    {
-                        id: "GA016",
-                        key: "GA016",
-                        name: "昆嵛山保护区",
-                        pId: "GA",
-                        title: "昆嵛山保护区",
-                    },
-                ],
-                id: "GA",
-                key: "GA",
-                name: "烟台市",
-                pId: "0",
-                title: "烟台市",
-            }
-        ],
         treeNewData: [],
         autoExpandParent: true,     //是否自动展开
-        sendParams:{}
+        sendParams:{},
+        data:[
+            {
+                key:1,
+                areaName:'12'
+            }
+        ]
     };
 
     componentDidMount() {
@@ -236,14 +119,13 @@ class CompanyStatistics extends PureComponent {
                     areaId: eventData.type === 'area' ? eventData.backId : eventData.type === 'industry' ? eventData.industryParentId: '' ,
                     industryId: eventData.type === 'industry' ? eventData.backId : '',
                     companyId: eventData.type === 'company' ? eventData.backId : '',
-                    startDay: T.lodash.isUndefined(values.startDate) ? '' : values.startDate === null ?  '' : T.helper.dateFormat(values.startDate,'YYYY-MM-DD'),      //开始时间
-                    endDay: T.lodash.isUndefined(values.endDate) ? '' : values.endDate === null ?  '' : T.helper.dateFormat(values.endDate,'YYYY-MM-DD'),      //开始时间
+                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,      //企业名称
                 };
-                // console.log(params,'params');
+                // console.lo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           g(params,'params');
                 this.setState({
                     sendParams:params
                 });
-                new Promise((resolve, reject) => {
+               /* new Promise((resolve, reject) => {
                     dispatch({
                         type: 'companyStatistics/fetchCompanyStatisticsAction',
                         params,
@@ -265,7 +147,7 @@ class CompanyStatistics extends PureComponent {
                     } else {
                         T.prompt.error(response.msg);
                     }
-                });
+                });*/
             }
         });
     };
@@ -384,20 +266,6 @@ class CompanyStatistics extends PureComponent {
         });
     };
 
-    // //渲染select树节点
-    // renderSelectTreeNodes = data => {
-    //     return data.map(item => {
-    //         if (item.children) {
-    //             return (
-    //                 <TreeSelect.TreeNode {...item} dataRef={item} title={item.name} value={item.name} key={item.id}>
-    //                     {this.renderSelectTreeNodes(item.children)}
-    //                 </TreeSelect.TreeNode>
-    //             );
-    //         }
-    //         return <TreeSelect.TreeNode {...item} dataRef={item} title={item.name} value={item.name} key={item.id}
-    //                                     isLeaf/>;
-    //     });
-    // };
 
     //查询
     searchDataSource = (e) => {
@@ -442,7 +310,7 @@ class CompanyStatistics extends PureComponent {
         });
     };
 
-    //每日上报reportInfo
+    //新增
     reportInfo = (e, key) => {
         router.push({
             pathname: '/companyStatistics/editDetail',
@@ -459,34 +327,11 @@ class CompanyStatistics extends PureComponent {
             pathname: '/companyStatistics/showDetail',
             params: {
                 isRouterPush: true,
-                data: key
-            },
-        });
-    };
-    //同步更新
-    updateData = (e, key) => {
-        const {dispatch} = this.props;
-        const {tableData} = this.state;
-        let self = this;
-        /*new Promise((resolve, reject) => {
-           dispatch({
-               type: 'companyStatistics/updateCompanyInfoAction',
-               id:key.id,
-               resolve,
-               reject,
-           });
-       }).then(response => {
-           if (response.code === 0) {
-               tableData.map((item)=>{
-                  if(item.id===key.id) {
-                      item = response.data
-                  }
-               })
+                data: key,
+                status:false
 
-           } else {
-               T.prompt.error(response.msg);
-           }
-       });*/
+    },
+        });
     };
     //编辑
     editDetail = (e, key) => {
@@ -539,7 +384,7 @@ class CompanyStatistics extends PureComponent {
             autoExpandParent,
             selectTreeKey,
             expandTreeKey,
-            sendParams,
+            data,
         } = this.state;
 
         const columns = [
@@ -550,50 +395,26 @@ class CompanyStatistics extends PureComponent {
                 width: '5%',
             },
             {
-                title: '今日上岗人数',
+                title: '县市区',
                 dataIndex: 'areaName',
                 // width: '8%',
             },
             {
-                title: '口罩库存（个）',
+                title: '企业名称',
                 dataIndex: 'industryName',
                 // width: '8%',
             },
             {
-                title: '消毒液库存',
+                title: '评定等级',
                 dataIndex: 'companyName',
                 // width: '8%',
             },
             {
-                title: '2月2日之后抵烟人员',
+                title: '评定时间',
                 dataIndex: 'bodyAbnormalNum6',
                 // width: '8%',
             },
-            {
-                title: '与确诊、疑似病例有过密切接触的人数',
-                dataIndex: 'bodyAbnormalNum7',
-                // width: '8%',
-            },
-            {
-                title: '与密切接触者有过共同生活、工作、学习、聚会的人数',
-                dataIndex: 'bodyAbnormalNum8',
-                // width: '8%',
-            },
-            {
-                title: '与重点疫区人员有过接触的人数',
-                dataIndex: 'bodyAbnormalNum9',
-                // width: '8%',
-            },
-            {
-                title: '身体状况异常的人数',
-                dataIndex: 'bodyAbnormalNum10',
-                // width: '8%',
-            },
-            {
-                title: '填报时间',
-                dataIndex: 'bodyAbnormalNum11',
-                // width: '8%',
-            },
+
             {
                 title: '操作',
                 key: 'action',
@@ -601,14 +422,11 @@ class CompanyStatistics extends PureComponent {
                 render: (text, record) => {
                     return (
                         <span>
-                            <a onClick={e => this.showDetail(e, record)}>查看详情</a>
-                            <Divider type="vertical" />
-                            <a onClick={e => this.updateData(e, record)}>同步更新</a>
+                            <a onClick={e => this.showDetail(e, record)}>查看</a>
                             <Divider type="vertical" />
                             <a onClick={e => this.editDetail(e, record)}>编辑</a>
                             <Divider type="vertical" />
                             <a onClick={e => this.deleteData(e, record)}>删除</a>
-
                         </span>
                     );
                 },
@@ -634,14 +452,14 @@ class CompanyStatistics extends PureComponent {
         let formEnd = T.lodash.isUndefined(formTimeValue.endDate) ? '' : formTimeValue.endDate === null ?  '' : T.helper.dateFormat(formTimeValue.endDate,'YYYY-MM-DD');
 
         // let apiHref = window.ENV.apiDomain + "/stat/export-stat-info?area=" + (T.auth.isAdmin() ? selectedArea === "烟台市" ? '' : selectedArea : loginInfo.data.area) + "&start=" + formStart + "&end=" + formEnd;
-        let apiHref = window.ENV.apiDomain + "/stat/export-stat-info?userId=" + loginInfo.data.user.id+"&areaId=" + sendParams.areaId + "&industryId=" + sendParams.industryId + "&companyId=" + sendParams.companyId  + "&startDay=" + formStart + "&endDay=" + formEnd;
+        // let apiHref = window.ENV.apiDomain + "/stat/export-stat-info?userId=" + loginInfo.data.user.id+"&areaId=" + sendParams.areaId + "&industryId=" + sendParams.industryId + "&companyId=" + sendParams.companyId  + "&startDay=" + formStart + "&endDay=" + formEnd;
         return (
             <PageHeaderWrapper
-                title="企业信息填报管理"
+                title="开工企业评定管理"
                 isSpecialBreadcrumb={true}
             >
                 <Row gutter={24}>
-                    {/*<Col xl={6} lg={6} md={6} sm={24} xs={24}>
+                    <Col xl={6} lg={6} md={6} sm={24} xs={24}>
                         <Card
                             title="资源列表"
                             bordered={false}
@@ -665,43 +483,50 @@ class CompanyStatistics extends PureComponent {
                                     </DirectoryTree>
                             }
                         </Card>
-                    </Col>*/}
-                    <Col xl={24} lg={24} md={24} sm={24} xs={24} className={styles.dataSourceTableList}>
+                    </Col>
+                    <Col xl={18} lg={18} md={18} sm={18} xs={24} className={styles.dataSourceTableList}>
                         <Form layout="inline" onSubmit={this.searchDataSource}>
                             <Row className={`${styles.dataSourceTitle} ${styles.tableListForms}`}
                                  style={{marginBottom: 10}}>
                                 <Col xl={6} lg={6} md={6} sm={6} xs={24}>
                                     <Form.Item
-                                        label='起始时间'
+                                        label='企业名称'
                                     >
-                                        {getFieldDecorator('startDate', {
-                                            // rules: [
-                                            //     {
-                                            //         // required: true,
-                                            //         // message:'请选择查询时间'
-                                            //     },
-                                            // ],
-                                            initialValue: T.moment(new Date().getTime()),
+                                        {getFieldDecorator('companyName', {
+                                            rules: [
+                                                {
+                                                    required: false,
+                                                    message:'请输入企业名称'
+                                                },
+                                            ],
+                                            // initialValue: T.moment(new Date().getTime()),
                                         })(
-                                            <DatePicker allowClear={false}/>
+                                            <Input
+                                                autoComplete="off"
+                                                placeholder="请输入企业名称"
+                                            />
                                         )}
                                     </Form.Item>
                                 </Col>
                                 <Col xl={6} lg={6} md={6} sm={6} xs={24}>
                                     <Form.Item
-                                        label='结束时间'
+                                        label='评定等级'
                                     >
-                                        {getFieldDecorator('endDate', {
-                                            // rules: [
-                                            //     {
-                                            //         // required: true,
-                                            //         // message:'请选择查询时间'
-                                            //     },
-                                            // ],
+                                        {getFieldDecorator('degree', {
+                                            rules: [
+                                                {
+                                                    required: false,
+                                                    message:'请选择评定等级'
+                                                },
+                                            ],
                                             // initialValue: T.moment(new Date().getTime()-24*60*60*1000),
                                             initialValue: T.moment(new Date().getTime()),
                                         })(
-                                            <DatePicker allowClear={false}/>
+                                            <Radio.Group onChange={this.onChange}>
+                                                <Radio value={"A"}>A</Radio>
+                                                <Radio value={"B"}>B</Radio>
+                                                <Radio value={"C"}>C</Radio>
+                                            </Radio.Group>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -714,11 +539,9 @@ class CompanyStatistics extends PureComponent {
                                             重置
                                         </Button>
                                         <Button onClick={this.reportInfo} type="primary" style={{marginRight: 10}}>
-                                            每日上报
+                                            新增
                                         </Button>
-                                        {/*<Button type="primary">
-                                            <a href={apiHref} target="_blank" >导出</a>
-                                        </Button>*/}
+
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -735,7 +558,8 @@ class CompanyStatistics extends PureComponent {
                                 <Table
                                     loading={fetchStatInfoStatus}
                                     columns={columns}
-                                    dataSource={tableData}
+                                    // dataSource={tableData}
+                                    dataSource={data}
                                     // rowSelection={rowSelection}
                                     pagination={false}
                                     scroll={{ y: 480 }}
