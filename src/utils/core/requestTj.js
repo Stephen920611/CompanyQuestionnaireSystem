@@ -77,6 +77,7 @@ const _request = (options = {}, isLogin = false) => {
                 //token容错
                 let backToken = !T.lodash.isUndefined(data) ? data.hasOwnProperty('token') ? data.token :'' : '';
                 //Expire容错
+                //TODO 调查问卷， 这个过期时间可能会有问题，需要研究一下设置成功问题
                 let backExpire = !T.lodash.isUndefined(data) ? data.hasOwnProperty('expire') ? new Date(data.expire) : 0 : 0;
                 resolve({data, token: backToken, code, msg});
                 // store.setStorage("__token__", backToken, backExpire);
@@ -92,7 +93,6 @@ const _request = (options = {}, isLogin = false) => {
                 //     });
                 // }
                 let cookieHas = cookiesUtil.get(cookieKey);
-                console.log(cookieHas,'cookieHas');
                 if(T.lodash.isUndefined(cookieHas)){
                     window.location.href = "/user/login";
                     T.prompt.error("登录失效，请重新登录");
@@ -192,7 +192,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
  * @param {boolean} urlHasSid url里是否还有sid，后端有时候需要一个数组，sid放在url上显示
  * @returns {Promise}
  */
-export function postJSON(url, params = {}, options = {}, isLogin = false, urlHasSid = false) {
+export function postJSON(url, params = {}, options = {}, isLogin = false, urlHasSid = false, hasToken = true) {
     //如果是login不需要sid
     let hasSidParams;
     if(isLogin){
@@ -202,16 +202,30 @@ export function postJSON(url, params = {}, options = {}, isLogin = false, urlHas
     }
     //取sid
     // let sid = {};
-    options = Object.assign({
-        url: url,
-        method: 'post',
-        // data: urlHasSid ? params : hasSidParams,
-        data: params,
-        headers: {
-            'Content-Type': 'application/json',
-            "token": isLogin ? '': cookiesUtil.get(window.ENV.login.cookieKey)
-        }
-    }, options);
+
+
+    if(hasToken) {
+        options = Object.assign({
+            url: url,
+            method: 'post',
+            // data: urlHasSid ? params : hasSidParams,
+            data: params,
+            headers: {
+                'Content-Type': 'application/json',
+                "token": isLogin ? '': cookiesUtil.get(window.ENV.login.cookieKey)
+            }
+        }, options);
+    }else {
+        options = Object.assign({
+            url: url,
+            method: 'post',
+            // data: urlHasSid ? params : hasSidParams,
+            data: params,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }, options);
+    }
 
     return _request(options, isLogin);
 }
