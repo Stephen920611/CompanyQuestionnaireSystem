@@ -60,9 +60,12 @@ class Auth {
      */
     getCurrentSessionId(){
         const info = store.getStorage(window.ENV.login.loginInfoKey);
-        return {
-            __sid: info.sessionid
+        if(!info){
+            return {
+                __sid: info.sessionid
+            }
         }
+
     }
 
     /**

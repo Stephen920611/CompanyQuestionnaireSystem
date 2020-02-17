@@ -5,6 +5,7 @@ import Link from 'umi/link';
 import router from 'umi/router';
 import {Form, Input, Button, Modal, Select, Row, Col, Popover, Progress} from 'antd';
 import styles from './ForgetPassword.less';
+import T from './../../utils/T';
 
 const FormItem = Form.Item;
 const {Option} = Select;
@@ -46,39 +47,108 @@ class ForgetPassword extends Component {
         visible: false,
         help: '',
         prefix: '86',
-        userTypeSelect: [],     //用户类型
+        userTypeSelect: [
+            // {
+            //     name: "市级管理员",
+            //     value: 0,
+            // },
+            // {
+            //     name: "区县级管理员",
+            //     value: 1,
+            // },
+            {
+                name: "企业用户",
+                value: 2,
+            },
+        ],     //用户类型
         citySelect: [],     //县市区
+        codeBack: "",     //验证码
     };
 
-    componentDidUpdate() {
-        const {form, register} = this.props;
-        const account = form.getFieldValue('mail');
-        if (register.status === 'ok') {
-            router.push({
-                pathname: '/user/register-result',
-                state: {
-                    account,
-                },
-            });
-        }
+    componentDidMount() {
+
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
+    //获取验证码
     onGetCaptcha = () => {
-        let count = 59;
-        this.setState({count});
-        this.interval = setInterval(() => {
-            count -= 1;
-            this.setState({count});
-            if (count === 0) {
-                clearInterval(this.interval);
+        const {dispatch, location, form} = this.props;
+        let self = this;
+        form.validateFields(["phone"], (err, values) => {
+            if (!err) {
+                //每180s验证一次
+                let count = 179;
+                this.setState({count});
+                this.interval = setInterval(() => {
+                    count -= 1;
+                    this.setState({count});
+                    if (count === 0) {
+                        clearInterval(this.interval);
+                    }
+                }, 1000);
+
+                //获取验证码
+                new Promise((resolve, reject) => {
+                    dispatch({
+                        type: 'register/sendCodeAction',
+                        params: {
+                            phone: values.phone
+                        },
+                        resolve,
+                        reject,
+                    });
+                }).then(response => {
+                    if (response.code === 0) {
+                        form.setFieldsValue({
+                            phone: response.msg,
+                        });
+                        self.setState({
+                            codeBack: response.msg
+                        })
+                    } else {
+                        T.prompt.error(response.msg);
+                    }
+                });
+            }else {
+                T.prompt.error(err.phone.errors[0].message);
             }
-        }, 1000);
-        Modal.info({
-            title: formatMessage({id: 'app.login.verification-code-warning'}),
+        });
+    };
+
+    //立即找回
+    handleSubmit = e => {
+        e.preventDefault();
+        const {form, dispatch} = this.props;
+
+        form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                //获取验证码
+                new Promise((resolve, reject) => {
+                    dispatch({
+                        type: 'register/forgetUserAction',
+                        params: {
+                            "captcha": values.captcha,
+                            "password": values.password,
+                            "role": 2,
+                            "username": values.phone,
+                        },
+                        resolve,
+                        reject,
+                    });
+                }).then(response => {
+                    if (response.code === 0) {
+                        T.prompt.success('密码找回成功，请登录');
+                        router.push({
+                            pathname: "/user/login"
+                        });
+                    } else {
+                        T.prompt.error(response.msg);
+                    }
+                });
+            }
         });
     };
 
@@ -92,23 +162,6 @@ class ForgetPassword extends Component {
             return 'pass';
         }
         return 'poor';
-    };
-
-    handleSubmit = e => {
-        e.preventDefault();
-        const {form, dispatch} = this.props;
-        form.validateFields({force: true}, (err, values) => {
-            if (!err) {
-                const {prefix} = this.state;
-                dispatch({
-                    type: 'register/submit',
-                    payload: {
-                        ...values,
-                        prefix,
-                    },
-                });
-            }
-        });
     };
 
     handleConfirmBlur = e => {
@@ -204,7 +257,6 @@ class ForgetPassword extends Component {
             userTypeSelect,
             citySelect
         } = this.state;
-        console.log(userTypeSelect,'userTypeSelect');
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
@@ -236,15 +288,11 @@ class ForgetPassword extends Component {
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                     <FormItem label="用户类型">
                         {getFieldDecorator('userType', {
-                            // initialValue: 0,
+                            initialValue: 2,
                             rules: [
                                 {
                                     required: true,
-                                    message: formatMessage({id: 'validation.email.required'}),
-                                },
-                                {
-                                    type: 'email',
-                                    message: formatMessage({id: 'validation.email.wrong-format'}),
+                                    message: "请选择用户类型",
                                 },
                             ],
                         })(
@@ -259,16 +307,7 @@ class ForgetPassword extends Component {
                     </FormItem>
                     <FormItem label="手机号">
                         <InputGroup compact>
-                            {/*<Select*/}
-                            {/*size="large"*/}
-                            {/*value={prefix}*/}
-                            {/*onChange={this.changePrefix}*/}
-                            {/*style={{ width: '20%' }}*/}
-                            {/*>*/}
-                            {/*<Option value="86">+86</Option>*/}
-                            {/*<Option value="87">+87</Option>*/}
-                            {/*</Select>*/}
-                            {getFieldDecorator('mobile', {
+                            {getFieldDecorator('phone', {
                                 rules: [
                                     {
                                         required: true,
@@ -282,13 +321,13 @@ class ForgetPassword extends Component {
                             })(
                                 <Input
                                     size="large"
-                                    style={{width: '80%'}}
+                                    style={{width: '100%'}}
                                     placeholder={formatMessage({id: 'form.phone-number.placeholder'})}
                                 />
                             )}
                         </InputGroup>
                     </FormItem>
-                    <FormItem help={help} label="新密码">
+                    <FormItem help={help} label="密码">
                         <Popover
                             getPopupContainer={node => node.parentNode}
                             content={
@@ -323,7 +362,7 @@ class ForgetPassword extends Component {
                             )}
                         </Popover>
                     </FormItem>
-                    <FormItem label="密码确认">
+                    <FormItem label="确认密码">
                         {getFieldDecorator('confirm', {
                             rules: [
                                 {
@@ -384,7 +423,7 @@ class ForgetPassword extends Component {
                             立即找回
                         </Button>
                         <Link className={styles.login} to="/User/Login">
-                            <FormattedMessage id="app.register.sign-in"/>
+                            返回登录页面
                         </Link>
                     </FormItem>
                 </Form>

@@ -120,7 +120,7 @@ export function get(url, params = {}, options = {}, isLogin = false) {
     if (isLogin) {
         hasSidParams = params;
     } else {
-        hasSidParams = Object.assign(params, T.auth.getCurrentSessionId());
+        hasSidParams = Object.assign(params, {});
     }
     Object.assign(options, {
         url,
@@ -145,7 +145,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
     if (isLogin) {
         hasSidParams = params;
     } else {
-        hasSidParams = Object.assign(params, T.auth.getCurrentSessionId());
+        hasSidParams = Object.assign(params, {});
     }
     let requestParams = new URLSearchParams();
     for (let [k, v] of Object.entries(hasSidParams)) {
@@ -181,10 +181,10 @@ export function postJSON(url, params = {}, options = {}, isLogin = false, urlHas
     if(isLogin){
         hasSidParams = params;
     }else {
-        hasSidParams = Object.assign(params, T.auth.getCurrentSessionId());
+        hasSidParams = Object.assign(params, {});
     }
     //取sid
-    // let sid = T.auth.getCurrentSessionId();
+    // let sid = {};
     options = Object.assign({
         url: url,
         method: 'post',

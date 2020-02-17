@@ -26,10 +26,22 @@ const processDataList = (api) => api;
 const EnumAPI = {
     /*
 	 |----------------------------------------------------------------
-	 | 登陆-相关的API地址
+	 | 登录注册忘记密码界面-相关的API地址
 	 |----------------------------------------------------------------
 	 */
     login: _processAPI('login'), // 登录
+    logout: _processAPI('logout'), // 退出
+    //注册
+    fetchAllArea: _processAPI('/area/getAll'), // 查询所有县市区
+    userRegist: _processAPI('/user/regist'), // 用户注册
+    sendCode: _processAPI('/verify/sendCode'), // 发送验证码
+    // verifySendCode: _processAPI('/verify/verfiyCode'), // 验证码验证，暂时不用，因为后端为了方便放到了一起处理
+    //忘记密码
+    forgetUser: _processAPI('/user/forget'), // 重置密码
+
+
+
+
     /*
     |----------------------------------------------------------------
     | 统一树的接口-开工企业评定管理
