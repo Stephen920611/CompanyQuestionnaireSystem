@@ -117,7 +117,7 @@ class CompanyStatistics extends PureComponent {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
                     userId: loginInfo.data.user.id,
-                    areaId:  loginInfo.data.user.role == 1 ? loginInfo.data.user.areaId:eventData.id,
+                    areaId:  loginInfo.data.user.role == 1 ? loginInfo.data.user.areaId : eventData.id,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,       //企业名称,
@@ -211,7 +211,7 @@ class CompanyStatistics extends PureComponent {
             endDate: T.moment(new Date().getTime()),
         });*/
         this.props.form.resetFields();
-        this.fetchDataList();
+        this.fetchDataList(clickTree);
     };
 
     //树选择
@@ -315,12 +315,17 @@ class CompanyStatistics extends PureComponent {
 
     //新增
     reportInfo = (e, key) => {
+        const {clickTree} = this.state;
+        let loginInfo = T.auth.getLoginInfo();
+        let user = loginInfo.data.user;
+        console.log('clickTree',clickTree);
         router.push({
             pathname: '/companyStatistics/editDetail',
             params: {
                 isRouterPush: true,
                 data: key,
-                status:true
+                status:true,
+                areaId:user.role == 1 ? user.areaId: clickTree.hasOwnProperty('id') ? clickTree.id : null
             },
         });
     };
@@ -338,12 +343,16 @@ class CompanyStatistics extends PureComponent {
     };
     //编辑
     editDetail = (e, key) => {
+        const {clickTree} = this.state;
+        let loginInfo = T.auth.getLoginInfo();
+        let user = loginInfo.data.user;
         router.push({
             pathname: '/companyStatistics/editDetail',
             params: {
                 isRouterPush: true,
                 data: key,
-                status:false
+                status:false,
+                areaId:user.role == 1 ? user.areaId: clickTree.hasOwnProperty('id') ? clickTree.id : null
             },
         });
     };
