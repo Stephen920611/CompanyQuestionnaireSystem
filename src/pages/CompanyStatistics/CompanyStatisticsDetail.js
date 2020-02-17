@@ -83,7 +83,7 @@ class CompanyStatisticsDetail extends PureComponent {
                 name: '查看开工企业评定详情',
             },
         ];
-        let apiHref = `${window.ENV.apiDomain}/word/download-evaluate?id=${location["params"]["data"]["id"]}`;
+        let apiHref = `${window.ENV.apiDomain}/word/download-evaluate?id=${location.hasOwnProperty("params") ? location["params"].hasOwnProperty('data') ? location["params"]["data"]["id"] : '' : ''}`;
 
         return (
             <PageHeaderWrapper
