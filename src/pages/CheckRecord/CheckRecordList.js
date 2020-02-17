@@ -75,6 +75,7 @@ class CheckRecordList extends PureComponent {
                 questionArray: []
             },
             isDownLoad: false,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载
+            paperId:0,
 
         }
     }
@@ -133,7 +134,7 @@ class CheckRecordList extends PureComponent {
                 let sendParams = {
                     // paperAnswerStr:{
                         paperBasic:{
-                            id:0,
+                            id:self.state.paperId,
                             userId: userId,
                             // userId: 4,
                             // area: values.area,	//县市区名字
@@ -168,8 +169,13 @@ class CheckRecordList extends PureComponent {
                     });
                 }).then(response => {
                     if (response.code === 0) {
+                        console.log('resss',response.data);
                         T.prompt.success("更新成功");
                         // self.resetForm();
+                        self.setState({
+                            paperId:response.data,
+                            isDownLoad:true
+                        })
                         
                     } else {
                         T.prompt.error(response.msg);
@@ -228,7 +234,14 @@ class CheckRecordList extends PureComponent {
                                 {...formItemLayout}
                                 label={item.questionContent}
                             >
-                                {getFieldDecorator('question' + item.id, {}
+                                {getFieldDecorator('question' + item.id, {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: "请选择",
+                                        },
+                                    ],
+                                    }
                                 )(
                                     <Radio.Group>
                                         <Radio value={1}>是</Radio>
@@ -261,6 +274,7 @@ class CheckRecordList extends PureComponent {
             isCreate,
             question,
             isDownLoad,
+            paperId,
         } = this.state;
         const {paperBasic, questionArray} = question;
         let loginInfo = T.auth.getLoginInfo();
@@ -380,7 +394,7 @@ class CheckRecordList extends PureComponent {
             },
         ];
 
-        let apiHref = `${window.ENV.apiDomain}/word/download-paper?userId=${loginInfo.data.user.id}&id=${1}`;
+        let apiHref = `${window.ENV.apiDomain}/word/download-paper?userId=${loginInfo.data.user.id}&id=${paperId}`;
 
         return (
             <PageHeaderWrapper
@@ -459,7 +473,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('addressName', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入注册地址",
                                                     },
                                                 ],
@@ -502,7 +516,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('reportName', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入填报人",
                                                     },
                                                     // {
@@ -527,7 +541,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('phoneNumber', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入联系电话",
                                                     },
                                                     // {
@@ -550,7 +564,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入在册职工数",
                                                     },
                                                 ],
@@ -570,7 +584,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredNonlocalNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入非烟台籍人数",
                                                     },
                                                 ],
@@ -590,7 +604,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredHubeiNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入湖北籍人数",
                                                     },
                                                 ],
@@ -633,7 +647,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('onguardNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入目前在岗人数",
                                                         },
                                                     ],
@@ -654,7 +668,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('onguardNonlocalNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入非烟台籍人数",
                                                         },
                                                     ],
@@ -675,7 +689,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('quarantineRoomNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入可用于集中隔离员工的房间数量",
                                                         },
                                                     ],

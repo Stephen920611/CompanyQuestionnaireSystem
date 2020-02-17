@@ -388,7 +388,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                             {getFieldDecorator('evaluateLevel', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: '请选择评定等级'
                                                     },
                                                 ],
@@ -409,7 +409,14 @@ class CompanyStatisticsEdit extends PureComponent {
                                             {...formItemLayout}
                                             label='存在的问题及整改要求：'
                                         >
-                                            {getFieldDecorator('evaluateContent', {}
+                                            {getFieldDecorator('evaluateContent', {
+                                                rules: [
+                                                    {
+                                                        required: true,
+                                                        message: "请填写存在的问题及整改要求",
+                                                    },
+                                                ],
+                                                }
                                             )(
                                                 <TextArea
                                                     placeholder="请填写存在的问题及整改要求"
