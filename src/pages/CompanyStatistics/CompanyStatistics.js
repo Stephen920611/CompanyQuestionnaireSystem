@@ -117,7 +117,7 @@ class CompanyStatistics extends PureComponent {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
                     userId: loginInfo.data.user.id,
-                    areaId:  eventData.id,
+                    areaId:  loginInfo.data.user.role == 1 ? loginInfo.data.user.areaId:eventData.id,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,       //企业名称,
@@ -206,12 +206,12 @@ class CompanyStatistics extends PureComponent {
     //重置表单
     resetDataSource = () => {
         const {clickTree} = this.state;
-        this.props.form.setFieldsValue({
+        /*this.props.form.setFieldsValue({
             startDate: T.moment(new Date().getTime()),
             endDate: T.moment(new Date().getTime()),
-        });
-        // this.props.form.resetFields();
-        this.fetchDataList(clickTree);
+        });*/
+        this.props.form.resetFields();
+        this.fetchDataList();
     };
 
     //树选择
