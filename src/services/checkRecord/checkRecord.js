@@ -13,7 +13,7 @@ export async function fetchPaper(params={}) {
 }
 //保存问卷
 export async function savePaper(params={}) {
-    return postJSON(EnumAPI.savePaper, params);
+    return post(EnumAPI.savePaper, params);
 }
 
 //fetchTreeData

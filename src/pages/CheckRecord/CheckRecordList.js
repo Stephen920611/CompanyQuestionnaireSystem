@@ -84,21 +84,20 @@ class CheckRecordList extends PureComponent {
 
         let self = this;
         let loginInfo = T.auth.getLoginInfo();
-        let userId = loginInfo.data.id;
+        let userId = loginInfo.data.user.id;
         console.log('userId', userId);
         new Promise((resolve, reject) => {
             dispatch({
                 type: 'checkRecord/fetchPaperAction',
                 params: {
-                    // userId:userId
-                    userId: 3
+                    userId:userId,
+                    // userId: 3
                 },
                 resolve,
                 reject,
             });
         }).then(response => {
             if (response.code === 0) {
-                console.log('11111', response.data)
                 self.setState({
                     question: response.data
                 })
@@ -120,8 +119,7 @@ class CheckRecordList extends PureComponent {
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
-                let userId = loginInfo.data.id;
-                console.log(values, 'values');
+                let userId = loginInfo.data.user.id;
                 let answerAry = [];
                 questionArray.map((item, index) => {
                     let name = 'question' + (index + 1);
@@ -134,12 +132,12 @@ class CheckRecordList extends PureComponent {
 
                 });
 
-                let params = {
-                    paperAnswerStr:{
+                let sendParams = {
+                    // paperAnswerStr:{
                         paperBasic:{
-                            id:9,
-                            // userId: userId,
-                            userId: 4,
+                            id:0,
+                            userId: userId,
+                            // userId: 4,
                             // area: values.area,	//县市区名字
                             companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
                             addressName: T.lodash.isUndefined(values.addressName) ? '' : values.addressName,
@@ -153,12 +151,15 @@ class CheckRecordList extends PureComponent {
                             quarantineRoomNum: T.lodash.isUndefined(values.quarantineRoomNum) ? '' : values.quarantineRoomNum,
                             propose: T.lodash.isUndefined(values.propose) ? '' : values.propose,
                             // companyId: T.lodash.isUndefined(values.companyId) ? '' : values.companyId,
-                            companyId: 1415,
+                            companyId: loginInfo.data.user.companyId,
                             createTime: T.moment(new Date().getTime()),
                             updateTime: T.moment(new Date().getTime())
                         },
                         answerAry:answerAry,
-                    }
+                    // }
+                };
+                let params = {
+                    paperAnswerStr:JSON.stringify(sendParams)
                 };
                 new Promise((resolve, reject) => {
                     dispatch({
@@ -170,10 +171,8 @@ class CheckRecordList extends PureComponent {
                 }).then(response => {
                     if (response.code === 0) {
                         T.prompt.success("更新成功");
-                        self.resetForm();
-                        router.push({
-                            pathname: '/addInfo',
-                        });
+                        // self.resetForm();
+                        
                     } else {
                         T.prompt.error(response.msg);
                     }
@@ -472,7 +471,7 @@ class CheckRecordList extends PureComponent {
                                             )}
                                         </Form.Item>
                                     </Col>
-                                    <Col span={6}>
+                                    {/*<Col span={6}>
                                         <Form.Item
                                             {...formItemLayout}
                                             label='所属县市区：'
@@ -494,7 +493,7 @@ class CheckRecordList extends PureComponent {
                                                 />
                                             )}
                                         </Form.Item>
-                                    </Col>
+                                    </Col>*/}
                                     <Col span={6}>
                                         <Form.Item
                                             {...formItemLayout}

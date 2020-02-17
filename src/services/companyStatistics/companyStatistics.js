@@ -5,7 +5,7 @@
  * @license dongfangdianzi
  */
 import EnumAPI from './../../constants/EnumAPI';
-import {postJSON, post, get} from './../../utils/core/requestTj';
+import {postJSON, post, get,put,del} from './../../utils/core/requestTj';
 import T from './../../utils/T';
 
 //统计查询
@@ -19,11 +19,11 @@ export async function deleteCompanyInfo(id) {
 }
 //新增saveCompanyInfo
 export async function saveCompanyInfo(params={}) {
-    return post(EnumAPI.saveCompanyInfo,params);
+    return postJSON(EnumAPI.saveCompanyInfo,params);
 }
 //同步
-export async function updateCompanyInfo(id) {
-    return del(EnumAPI.updateCompanyInfo,id);
+export async function updateCompanyInfo(params={}) {
+    return put(EnumAPI.updateCompanyInfo,params={});
 }
 
 //获取详情接口fetchCompanyDetailById

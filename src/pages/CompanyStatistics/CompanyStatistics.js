@@ -110,17 +110,17 @@ class CompanyStatistics extends PureComponent {
         const {dispatch, form} = this.props;
         const {currentPage, selectedArea} = this.state;
         let self = this;
-        console.log(2222222222222222)
+        console.log('2222222222222222',T.auth.getLoginInfo());
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let params = {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
-                    // userId: loginInfo.data.user.id,
-                    userId: 1,
+                    userId: loginInfo.data.user.id,
+                    areaId: loginInfo.data.user.areaId,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
-                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,      //企业名称,
+                    companyName: loginInfo.data.user.companyName,      //企业名称,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
                     evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,      //等级
                     // companyId: eventData.type === 'company' ? eventData.backId : ''
@@ -449,6 +449,7 @@ class CompanyStatistics extends PureComponent {
             }),
         };
         let loginInfo = T.auth.getLoginInfo();
+        let role = loginInfo.data.user.role;
         //获取表单的value
         let formTimeValue = getFieldsValue();
 
@@ -463,32 +464,35 @@ class CompanyStatistics extends PureComponent {
                 isSpecialBreadcrumb={true}
             >
                 <Row gutter={24}>
-                    <Col xl={6} lg={6} md={6} sm={24} xs={24}>
-                        <Card
-                            title="资源列表"
-                            bordered={false}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        >
-                            {
-                                fetchTreeStatus ? <Spin/> :
-                                    <DirectoryTree
-                                        multiple
-                                        defaultExpandAll={true}
-                                        onSelect={this.onSelect}
-                                        onExpand={this.onExpand}
-                                        selectedKeys={selectTreeKey}
-                                        expandedKeys={expandTreeKey}
-                                        autoExpandParent={autoExpandParent}
-                                    >
-                                        {this.renderTreeNodes(treeNewData)}
-                                    </DirectoryTree>
-                            }
-                        </Card>
-                    </Col>
-                    <Col xl={18} lg={18} md={18} sm={18} xs={24} className={styles.dataSourceTableList}>
+                    {role == 2 ? '':
+                        <Col xl={6} lg={6} md={6} sm={24} xs={24}>
+                            <Card
+                                title="资源列表"
+                                bordered={false}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                            >
+                                {
+                                    fetchTreeStatus ? <Spin/> :
+                                        <DirectoryTree
+                                            multiple
+                                            defaultExpandAll={true}
+                                            onSelect={this.onSelect}
+                                            onExpand={this.onExpand}
+                                            selectedKeys={selectTreeKey}
+                                            expandedKeys={expandTreeKey}
+                                            autoExpandParent={autoExpandParent}
+                                        >
+                                            {this.renderTreeNodes(treeNewData)}
+                                        </DirectoryTree>
+                                }
+                            </Card>
+                        </Col>
+
+                    }
+                    <Col span={role === 2 ? 24 : 18} className={styles.dataSourceTableList}>
                         <Form layout="inline" onSubmit={this.searchDataSource}>
                             <Row className={`${styles.dataSourceTitle} ${styles.tableListForms}`}
                                  style={{marginBottom: 10}}>

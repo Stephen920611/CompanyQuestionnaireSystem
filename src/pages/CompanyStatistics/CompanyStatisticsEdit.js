@@ -145,36 +145,38 @@ class CompanyStatisticsEdit extends PureComponent {
     //提交功能
     onSubmitData = (e) => {
         let self = this;
+        const{isCreate} = this.state;
         const {dispatch, form, location} = this.props;
         e.preventDefault();
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
-                let userId = loginInfo.data.id;
+                let userId = loginInfo.data.user.id;
                 console.log(values, 'values');
                 let params = {
-                    companyId: 0,
+                    companyId: loginInfo.data.user.companyId,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
-                    createTime: "2020-02-17T03:23:23.495Z",
+                    createTime: T.moment(new Date().getTime()),
                     evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,
                     evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,
                     id: isCreate ? 0 : location["params"]["data"]["id"],
-                    updateTime: "2020-02-17T03:23:23.495Z",
-                    userId: 0
+                    // updateTime: T.helper.dateFormat(T.moment.locale('zh-cn'),'YYYY-MM-DD HH:mm:ss'),
+                    updateTime: T.moment(new Date().getTime()),
+                    userId:userId
                 };
                 new Promise((resolve, reject) => {
                     dispatch({
-                        type: 'companyStatistics/addInfoAction',
+                        type: isCreate ? 'companyStatistics/saveCompanyInfoAction':'companyStatistics/updateCompanyInfoAction',
                         params,
                         resolve,
                         reject,
                     });
                 }).then(response => {
                     if (response.code === 0) {
-                        T.prompt.success("更新成功");
+                        T.prompt.success("保存成功");
                         self.resetForm();
                         router.push({
-                            pathname: '/addInfo',
+                            pathname: '/companyStatistics',
                         });
                     } else {
                         T.prompt.error(response.msg);
@@ -402,6 +404,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                 <Row className={styles.detailTitle}>
                                     <Col span={8} className={styles.detailBtns}>
                                         <Form.Item
+                                            {...formItemLayout}
                                             label='评定等级'
                                         >
                                             {getFieldDecorator('evaluateLevel', {
