@@ -4,6 +4,7 @@
 import lodash from 'lodash';
 import prompt from './core/prompt';
 import auth from './core/auth';
+import cookies from 'js-cookie';
 import helper from './core/helper';
 import Socket from './core/socket';
 import moment from 'moment';
@@ -21,6 +22,8 @@ const T = {
     prompt,
     //时间
     moment,
+    // 说明文档:https://github.com/js-cookie/js-cookie
+    cookies: cookies,
     //websocket
     Socket,
     //针对当前系统做的存取storage已经失效验证

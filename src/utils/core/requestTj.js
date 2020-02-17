@@ -6,6 +6,7 @@
  */
 
 import axios from 'axios';
+import cookiesUtil from 'js-cookie';
 import router from 'umi/router';
 import queryString from 'query-string';
 import './../../config/ENV';
@@ -66,21 +67,23 @@ const Singleton = (function () {
 const _request = (options = {}, isLogin = false) => {
     // const successCode = window.ENV.apiSuccessCode;
     return new Promise((resolve, reject) => {
-        // const { errorCode, loginUrl, isCheckLogin } = window.ENV.login;
+        const { errorCode, cookieKey, isCheckLogin } = window.ENV.login;
 
         Singleton.getInstance().request(options).then((resp) => {
+
             //前端自己判断是不是登录，如果不是的话返回的参数跟登录的接口返回的参数不一致
             if (isLogin) {
                 const {data, code, msg} = resp.data;
                 //token容错
                 let backToken = !T.lodash.isUndefined(data) ? data.hasOwnProperty('token') ? data.token :'' : '';
                 //Expire容错
-                let backExpire = !T.lodash.isUndefined(data) ? data.hasOwnProperty('expire') ? data.expire : 0 : 0;
+                let backExpire = !T.lodash.isUndefined(data) ? data.hasOwnProperty('expire') ? new Date(data.expire) : 0 : 0;
                 resolve({data, token: backToken, code, msg});
-                store.setStorage("__token__", backToken, backExpire);
+                // store.setStorage("__token__", backToken, backExpire);
+                cookiesUtil.set(cookieKey, backToken, { expires: backExpire});
             } else {
                 const {data, code, msg} = resp.data;
-                // 判断是否登录
+                // 判断是否登录过期
                 // if (result === "login") {
                 //     // window.location.href = "login";
                 //     T.prompt.error(message);
@@ -88,7 +91,17 @@ const _request = (options = {}, isLogin = false) => {
                 //         type: 'login/logout',
                 //     });
                 // }
-                resolve({data, code, msg});
+                let cookieHas = cookiesUtil.get(cookieKey);
+                if(T.lodash.isUndefined(cookieHas)){
+                    window.location.href = "/user/login";
+                    T.prompt.error("登录失效，请重新登录");
+                    window.g_app._store.dispatch({
+                        type: 'login/logout',
+                    });
+                }else {
+                    resolve({data, code, msg});
+                }
+
             }
         }).catch((error) => {
             console.log(error, 'error');
@@ -127,7 +140,7 @@ export function get(url, params = {}, options = {}, isLogin = false) {
         method: 'get',
         params: hasSidParams,
         headers: {
-            "token": isLogin ? '': store.getStorage("__token__")
+            "token": isLogin ? '': cookiesUtil.get(window.ENV.login.cookieKey)
         }
     });
 
@@ -161,7 +174,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
         data: requestParams,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            "token": isLogin ? '': store.getStorage("__token__")
+            "token": isLogin ? '': cookiesUtil.get(window.ENV.login.cookieKey)
         }
     }, options);
 
@@ -195,7 +208,7 @@ export function postJSON(url, params = {}, options = {}, isLogin = false, urlHas
         data: params,
         headers: {
             'Content-Type': 'application/json',
-            "token": isLogin ? '': store.getStorage("__token__")
+            "token": isLogin ? '': cookiesUtil.get(window.ENV.login.cookieKey)
         }
     }, options);
 

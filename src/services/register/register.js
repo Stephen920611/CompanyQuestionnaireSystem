@@ -29,6 +29,10 @@ export async function forgetUser(params = {}) {
     return postJSON(EnumAPI.forgetUser, params);
 }
 
+//退出登录
+export async function logout(params = {}) {
+    return postJSON(EnumAPI.logout, params);
+}
 
 
 
