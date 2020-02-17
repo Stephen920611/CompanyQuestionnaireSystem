@@ -2,6 +2,7 @@ export default {
     'menu.home': '首页',
     'menu.login': '登录',
     'menu.register': '注册',
+    'menu.forgetPassword': '忘记密码',
     'menu.register.result': '注册结果',
     'menu.dashboard': '首页',
     'menu.touchStatisticsPage': '摸排统计页面',

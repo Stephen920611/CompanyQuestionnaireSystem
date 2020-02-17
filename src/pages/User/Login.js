@@ -112,6 +112,7 @@ class LoginPage extends Component {
         let loginInfo = {
             "username": values["userName"],
             "password": values["password"],
+            "role": 2,
             // "__ajax":"json",
         };
         if (!err) {
