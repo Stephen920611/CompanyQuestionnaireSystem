@@ -73,8 +73,8 @@ class CheckRecordList extends PureComponent {
             question: {
                 paperBasic: {},
                 questionArray: []
-            }
-
+            },
+            isDownLoad: false,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载
 
         }
     }
@@ -260,6 +260,7 @@ class CheckRecordList extends PureComponent {
             baseInfoSelect,
             isCreate,
             question,
+            isDownLoad,
         } = this.state;
         const {paperBasic, questionArray} = question;
         let loginInfo = T.auth.getLoginInfo();
@@ -715,6 +716,7 @@ class CheckRecordList extends PureComponent {
                                 <Button
                                     type="primary"
                                     style={{marginLeft: 16}}
+                                    disabled={!isDownLoad}
                                 >
                                     <a href={apiHref} target="_blank" >下载</a>
                                 </Button>
