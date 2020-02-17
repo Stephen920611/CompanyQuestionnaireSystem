@@ -228,7 +228,14 @@ class CheckRecordList extends PureComponent {
                                 {...formItemLayout}
                                 label={item.questionContent}
                             >
-                                {getFieldDecorator('question' + item.id, {}
+                                {getFieldDecorator('question' + item.id, {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: "请选择",
+                                        },
+                                    ],
+                                    }
                                 )(
                                     <Radio.Group>
                                         <Radio value={1}>是</Radio>
@@ -459,7 +466,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('addressName', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入注册地址",
                                                     },
                                                 ],
@@ -502,7 +509,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('reportName', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入填报人",
                                                     },
                                                     // {
@@ -550,7 +557,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入在册职工数",
                                                     },
                                                 ],
@@ -570,7 +577,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredNonlocalNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入非烟台籍人数",
                                                     },
                                                 ],
@@ -590,7 +597,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('registeredHubeiNum', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入湖北籍人数",
                                                     },
                                                 ],
@@ -633,7 +640,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('onguardNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入目前在岗人数",
                                                         },
                                                     ],
@@ -654,7 +661,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('onguardNonlocalNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入非烟台籍人数",
                                                         },
                                                     ],
@@ -675,7 +682,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('quarantineRoomNum', {
                                                     rules: [
                                                         {
-                                                            required: false,
+                                                            required: true,
                                                             message: "请输入可用于集中隔离员工的房间数量",
                                                         },
                                                     ],
