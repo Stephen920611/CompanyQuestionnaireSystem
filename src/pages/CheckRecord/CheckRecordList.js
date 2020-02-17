@@ -73,8 +73,8 @@ class CheckRecordList extends PureComponent {
             question: {
                 paperBasic: {},
                 questionArray: []
-            }
-
+            },
+            isDownLoad: false,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载
 
         }
     }
@@ -85,13 +85,11 @@ class CheckRecordList extends PureComponent {
         let self = this;
         let loginInfo = T.auth.getLoginInfo();
         let userId = loginInfo.data.user.id;
-        console.log('userId', userId);
         new Promise((resolve, reject) => {
             dispatch({
                 type: 'checkRecord/fetchPaperAction',
                 params: {
                     userId:userId,
-                    // userId: 3
                 },
                 resolve,
                 reject,
@@ -262,6 +260,7 @@ class CheckRecordList extends PureComponent {
             baseInfoSelect,
             isCreate,
             question,
+            isDownLoad,
         } = this.state;
         const {paperBasic, questionArray} = question;
         let loginInfo = T.auth.getLoginInfo();
@@ -381,6 +380,7 @@ class CheckRecordList extends PureComponent {
             },
         ];
 
+        let apiHref = `${window.ENV.apiDomain}/word/download-paper?userId=${loginInfo.data.user.id}&id=${1}`;
 
         return (
             <PageHeaderWrapper
@@ -701,8 +701,10 @@ class CheckRecordList extends PureComponent {
                                 {this.renderQuestion(questionArray)}
 
                             </Card>
-                            <FormItem {...submitFormLayout}
-                                      style={{marginTop: 32, paddingBottom: 24, textAlign: 'center'}}>
+                            <FormItem
+                                {...submitFormLayout}
+                                style={{marginTop: 32, paddingBottom: 24, textAlign: 'center'}}
+                            >
                                 <Button
                                     style={{marginLeft: 16}}
                                     type="primary"
@@ -712,7 +714,14 @@ class CheckRecordList extends PureComponent {
                                     保存
                                 </Button>
                                 <Button
-                                    style={{marginLeft: 8}}
+                                    type="primary"
+                                    style={{marginLeft: 16}}
+                                    disabled={!isDownLoad}
+                                >
+                                    <a href={apiHref} target="_blank" >下载</a>
+                                </Button>
+                                <Button
+                                    style={{marginLeft: 16}}
                                     type="primary"
                                     onClick={this.resetForm}
                                 >
