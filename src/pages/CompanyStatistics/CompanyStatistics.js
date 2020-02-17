@@ -379,6 +379,16 @@ class CompanyStatistics extends PureComponent {
            }
        });
     };
+    pageChange = page => {
+        const {clickTree} = this.state;
+        let self = this;
+        this.setState({
+                currentPage: page,
+            }, () => {
+            self.fetchDataList(clickTree);
+            }
+        );
+    };
 
 
     render() {
@@ -579,8 +589,14 @@ class CompanyStatistics extends PureComponent {
                                     columns={columns}
                                     dataSource={tableData}
                                     // rowSelection={rowSelection}
-                                    pagination={false}
+                                    // pagination={false}
                                     scroll={{ y: 480 }}
+                                    pagination={{
+                                        current: currentPage,
+                                        size: EnumDataSyncPageInfo.defaultPageSize,
+                                        onChange: this.pageChange,
+                                        // total: sourceProcessorsList.hasOwnProperty('total') ? Number(sourceProcessorsList.total) + 1 : 0,
+                                    }}
                                     // rowClassName={record => (record.editable ? styles.editable : '')}
                                 />
                             </Card>
