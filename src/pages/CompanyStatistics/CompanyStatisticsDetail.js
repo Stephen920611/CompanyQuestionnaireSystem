@@ -66,7 +66,7 @@ class CompanyStatisticsDetail extends PureComponent {
     }
 
     render() {
-        const {fetchStatus} = this.props;
+        const {fetchStatus, location} = this.props;
         const {
             activities,
             currentInfo,
@@ -83,6 +83,8 @@ class CompanyStatisticsDetail extends PureComponent {
                 name: '查看开工企业评定详情',
             },
         ];
+        let apiHref = `${window.ENV.apiDomain}/word/download-evaluate?id=${location.hasOwnProperty("params") ? location["params"].hasOwnProperty('data') ? location["params"]["data"]["id"] : '' : ''}`;
+
         return (
             <PageHeaderWrapper
                 title={"查看开工企业评定详情"}
@@ -122,18 +124,14 @@ class CompanyStatisticsDetail extends PureComponent {
                                         {member.hasOwnProperty('evaluateContent') ? member.evaluateContent : '---'}
                                     </span>
                                 </Col>
-
                             </Row>
-
-
                         </Card>
                         <div className={styles.detailTitleName}>
                             <Button
                                 style={{marginLeft: 16}}
                                 type="primary"
-                                // loading={savingStatus}
                             >
-                                下载
+                                <a href={apiHref} target="_blank" >下载</a>
                             </Button>
                         </div>
                     </div>
