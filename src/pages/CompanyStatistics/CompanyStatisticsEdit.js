@@ -70,7 +70,8 @@ class CompanyStatisticsEdit extends PureComponent {
             member: {},
             touch: [],
             isCreate: true,
-            editData:{}
+            editData:{},
+            areaId:null
 
 
         }
@@ -86,6 +87,7 @@ class CompanyStatisticsEdit extends PureComponent {
         if (location.hasOwnProperty("params") && location["params"].hasOwnProperty("data") && location["params"].hasOwnProperty("status")) {
             this.setState({
                 isCreate: location["params"]["status"],
+                areaId:location["params"].hasOwnProperty('areaId')?location["params"]["areaId"]:''
             })
             if(!location["params"]["status"]){
 
@@ -99,7 +101,6 @@ class CompanyStatisticsEdit extends PureComponent {
                     });
                 }).then(response => {
                     if (response.code === 0) {
-                        console.log('11111',response.data);
 
                         const {companyName, evaluateContent, evaluateLevel, id} = response.data;
                         self.setState({
@@ -124,15 +125,16 @@ class CompanyStatisticsEdit extends PureComponent {
     //提交功能
     onSubmitData = (e) => {
         let self = this;
-        const{isCreate,editData} = this.state;
+        const{isCreate,editData,areaId} = this.state;
         const {dispatch, form, location} = this.props;
+        console.log('editData',editData);
         e.preventDefault();
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let userId = loginInfo.data.user.id;
                 let params = {
-                    companyId: isCreate ? loginInfo.data.user.companyId: editData["companyId"],
+                    areaId:  isCreate ? areaId : editData["areaId"],
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
                     createTime: isCreate ? T.moment(new Date().getTime()): editData["createTime"],
                     evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,

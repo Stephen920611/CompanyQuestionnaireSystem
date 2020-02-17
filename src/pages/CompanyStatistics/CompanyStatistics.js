@@ -117,7 +117,7 @@ class CompanyStatistics extends PureComponent {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
                     userId: loginInfo.data.user.id,
-                    areaId:  eventData.id,
+                    areaId:  loginInfo.data.user.role == 1 ? loginInfo.data.user.areaId : eventData.id,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,       //企业名称,
@@ -206,11 +206,11 @@ class CompanyStatistics extends PureComponent {
     //重置表单
     resetDataSource = () => {
         const {clickTree} = this.state;
-        this.props.form.setFieldsValue({
+        /*this.props.form.setFieldsValue({
             startDate: T.moment(new Date().getTime()),
             endDate: T.moment(new Date().getTime()),
-        });
-        // this.props.form.resetFields();
+        });*/
+        this.props.form.resetFields();
         this.fetchDataList(clickTree);
     };
 
@@ -315,12 +315,17 @@ class CompanyStatistics extends PureComponent {
 
     //新增
     reportInfo = (e, key) => {
+        const {clickTree} = this.state;
+        let loginInfo = T.auth.getLoginInfo();
+        let user = loginInfo.data.user;
+        console.log('clickTree',clickTree);
         router.push({
             pathname: '/companyStatistics/editDetail',
             params: {
                 isRouterPush: true,
                 data: key,
-                status:true
+                status:true,
+                areaId:user.role == 1 ? user.areaId: clickTree.hasOwnProperty('id') ? clickTree.id : null
             },
         });
     };
@@ -338,12 +343,16 @@ class CompanyStatistics extends PureComponent {
     };
     //编辑
     editDetail = (e, key) => {
+        const {clickTree} = this.state;
+        let loginInfo = T.auth.getLoginInfo();
+        let user = loginInfo.data.user;
         router.push({
             pathname: '/companyStatistics/editDetail',
             params: {
                 isRouterPush: true,
                 data: key,
-                status:false
+                status:false,
+                areaId:user.role == 1 ? user.areaId: clickTree.hasOwnProperty('id') ? clickTree.id : null
             },
         });
     };
@@ -369,6 +378,16 @@ class CompanyStatistics extends PureComponent {
                T.prompt.error(response.msg);
            }
        });
+    };
+    pageChange = page => {
+        const {clickTree} = this.state;
+        let self = this;
+        this.setState({
+                currentPage: page,
+            }, () => {
+            self.fetchDataList(clickTree);
+            }
+        );
     };
 
 
@@ -410,7 +429,7 @@ class CompanyStatistics extends PureComponent {
             },
             {
                 title: '评定等级',
-                dataIndex: 'evaluteLevel',
+                dataIndex: 'evaluateLevel',
                 // width: '8%',
             },
             {
@@ -570,8 +589,14 @@ class CompanyStatistics extends PureComponent {
                                     columns={columns}
                                     dataSource={tableData}
                                     // rowSelection={rowSelection}
-                                    pagination={false}
+                                    // pagination={false}
                                     scroll={{ y: 480 }}
+                                    pagination={{
+                                        current: currentPage,
+                                        size: EnumDataSyncPageInfo.defaultPageSize,
+                                        onChange: this.pageChange,
+                                        // total: sourceProcessorsList.hasOwnProperty('total') ? Number(sourceProcessorsList.total) + 1 : 0,
+                                    }}
                                     // rowClassName={record => (record.editable ? styles.editable : '')}
                                 />
                             </Card>
