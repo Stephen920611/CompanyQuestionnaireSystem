@@ -66,7 +66,8 @@ class CompanyStatistics extends PureComponent {
                 key:1,
                 areaName:'12'
             }
-        ]
+        ],
+        totalNum: 0,        //表格数量
     };
 
     componentDidMount() {
@@ -107,6 +108,7 @@ class CompanyStatistics extends PureComponent {
 
     //获取当前页数数据
     fetchDataList = (eventData) => {
+        console.log(eventData,'eventData');
         const {dispatch, form} = this.props;
         const {currentPage, selectedArea} = this.state;
         let self = this;
@@ -117,7 +119,7 @@ class CompanyStatistics extends PureComponent {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
                     userId: loginInfo.data.user.id,
-                    areaId:  loginInfo.data.user.role == 1 ? loginInfo.data.user.areaId : eventData.id,
+                    areaId:  loginInfo.data.user.role === 1 ? loginInfo.data.user.areaId : eventData.id,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,       //企业名称,
@@ -145,6 +147,7 @@ class CompanyStatistics extends PureComponent {
                         });
                         self.setState({
                             tableData: endData,
+                            totalNum: response.data.total
                         })
                     } else {
                         T.prompt.error(response.msg);
@@ -224,7 +227,6 @@ class CompanyStatistics extends PureComponent {
             selectedArea: eventData.name,
             clickTree: eventData.dataRef,
         }, () => {
-            console.log('eventData',eventData)
             self.fetchDataList(eventData.dataRef)
         });
     };
@@ -383,11 +385,10 @@ class CompanyStatistics extends PureComponent {
         const {clickTree} = this.state;
         let self = this;
         this.setState({
-                currentPage: page,
-            }, () => {
+            currentPage: page,
+        }, () => {
             self.fetchDataList(clickTree);
-            }
-        );
+        });
     };
 
 
@@ -408,6 +409,7 @@ class CompanyStatistics extends PureComponent {
             selectTreeKey,
             expandTreeKey,
             data,
+            totalNum,
         } = this.state;
 
         const columns = [
@@ -590,11 +592,12 @@ class CompanyStatistics extends PureComponent {
                                     dataSource={tableData}
                                     // rowSelection={rowSelection}
                                     // pagination={false}
-                                    scroll={{ y: 480 }}
+                                    // scroll={{ y: 480 }}
                                     pagination={{
                                         current: currentPage,
                                         size: EnumDataSyncPageInfo.defaultPageSize,
                                         onChange: this.pageChange,
+                                        total: totalNum
                                         // total: sourceProcessorsList.hasOwnProperty('total') ? Number(sourceProcessorsList.total) + 1 : 0,
                                     }}
                                     // rowClassName={record => (record.editable ? styles.editable : '')}
