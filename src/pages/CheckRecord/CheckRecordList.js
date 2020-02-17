@@ -227,31 +227,63 @@ class CheckRecordList extends PureComponent {
         } = this.state;
         return (
             data.map((item, idx) => {
-                return (
-                    <Row className={styles.detailTitle}>
-                        <Col span={24}>
-                            <Form.Item
-                                {...formItemLayout}
-                                label={item.questionContent}
-                            >
-                                {getFieldDecorator('question' + item.id, {
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: "请选择",
-                                        },
-                                    ],
-                                    }
-                                )(
-                                    <Radio.Group>
-                                        <Radio value={1}>是</Radio>
-                                        <Radio value={0}>否</Radio>
-                                    </Radio.Group>
-                                )}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                )
+                if(idx === 6){
+                    return (
+                        <Row className={styles.detailTitle}>
+                            <Col span={24}>
+                                <Form.Item
+                                    {...formItemLayout}
+                                    label={(idx+1) +'、'+ item.questionContent}
+                                >
+                                    {getFieldDecorator('question' + item.id, {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message: "请选择",
+                                                },
+                                            ],
+                                        }
+                                    )(
+                                        <Radio.Group>
+                                            <Radio value={1}>居家隔离</Radio>
+                                            <Radio value={2}>企业集中隔离</Radio>
+                                            <Radio value={3}>当地政府集中隔离</Radio>
+                                            <Radio value={4}>否</Radio>
+                                        </Radio.Group>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )
+
+                }else{
+                    return (
+                        <Row className={styles.detailTitle}>
+                            <Col span={24}>
+                                <Form.Item
+                                    {...formItemLayout}
+                                    label={(idx+1) +'、'+ item.questionContent}
+                                >
+                                    {getFieldDecorator('question' + item.id, {
+                                            rules: [
+                                                {
+                                                    required: idx === 5?false:true,
+                                                    message: "请选择",
+                                                },
+                                            ],
+                                        }
+                                    )(
+                                        <Radio.Group>
+                                            <Radio value={1}>是</Radio>
+                                            <Radio value={0}>否</Radio>
+                                        </Radio.Group>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )
+                }
+
             })
         )
     }
@@ -513,7 +545,7 @@ class CheckRecordList extends PureComponent {
                                             {...formItemLayout}
                                             label='填报人：'
                                         >
-                                            {getFieldDecorator('reportName', {
+                                            {getFieldDecorator('reportUser', {
                                                 rules: [
                                                     {
                                                         required: true,
@@ -713,6 +745,38 @@ class CheckRecordList extends PureComponent {
                                 loading={fetchStatus}
                             >
                                 {this.renderQuestion(questionArray)}
+
+                            </Card>
+                            <div className={styles.detailTitleName}>
+                                二、对疫情防控工作的意见建议
+                            </div>
+                            <Card
+                                style={{marginBottom: 20}}
+                                loading={fetchStatus}
+                            >
+                                <Row className={styles.detailTitle}>
+                                    <Col span={24}>
+                                        <Form.Item
+                                            {...formItemLayout}
+                                            label='存在的问题及整改要求：'
+                                        >
+                                            {getFieldDecorator('propose', {
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: "请输入存在的问题及整改要求",
+                                                        },
+                                                    ],
+                                                }
+                                            )(
+                                                <TextArea
+                                                    placeholder="请输入存在的问题及整改要求"
+                                                    autoSize={{minRows: 3, maxRows: 6}}
+                                                />
+                                            )}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
 
                             </Card>
                             <FormItem
