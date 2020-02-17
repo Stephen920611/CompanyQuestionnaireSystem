@@ -74,7 +74,7 @@ class CheckRecordList extends PureComponent {
                 paperBasic: {},
                 questionArray: []
             },
-            isDownLoad: false,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载
+            isDownLoad: true,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载, true是禁用，false是不禁用
             paperId:0,
 
         }
@@ -174,7 +174,7 @@ class CheckRecordList extends PureComponent {
                         // self.resetForm();
                         self.setState({
                             paperId:response.data,
-                            isDownLoad:true
+                            isDownLoad:false
                         })
                         
                     } else {
@@ -730,7 +730,7 @@ class CheckRecordList extends PureComponent {
                                 <Button
                                     type="primary"
                                     style={{marginLeft: 16}}
-                                    disabled={!isDownLoad}
+                                    disabled={isDownLoad}
                                 >
                                     <a href={apiHref} target="_blank" >下载</a>
                                 </Button>
