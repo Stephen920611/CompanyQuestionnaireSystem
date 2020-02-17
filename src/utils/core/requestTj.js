@@ -92,6 +92,7 @@ const _request = (options = {}, isLogin = false) => {
                 //     });
                 // }
                 let cookieHas = cookiesUtil.get(cookieKey);
+                console.log(cookieHas,'cookieHas');
                 if(T.lodash.isUndefined(cookieHas)){
                     window.location.href = "/user/login";
                     T.prompt.error("登录失效，请重新登录");
