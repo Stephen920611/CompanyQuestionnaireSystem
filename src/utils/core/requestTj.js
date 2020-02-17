@@ -126,6 +126,9 @@ export function get(url, params = {}, options = {}, isLogin = false) {
         url,
         method: 'get',
         params: hasSidParams,
+        headers: {
+            "token": isLogin ? '': store.getStorage("__token__")
+        }
     });
 
     return _request(options, isLogin);
@@ -158,7 +161,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
         data: requestParams,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            // "token": isLogin ? '': store.getStorage("__token__")
+            "token": isLogin ? '': store.getStorage("__token__")
         }
     }, options);
 
@@ -192,6 +195,7 @@ export function postJSON(url, params = {}, options = {}, isLogin = false, urlHas
         data: params,
         headers: {
             'Content-Type': 'application/json',
+            "token": isLogin ? '': store.getStorage("__token__")
         }
     }, options);
 
