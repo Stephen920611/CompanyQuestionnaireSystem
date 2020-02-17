@@ -153,62 +153,18 @@ class CompanyStatisticsEdit extends PureComponent {
                 let userId = loginInfo.data.id;
                 console.log(values, 'values');
                 let params = {
-                    member: {
-                        area: values.area,	//县市区名字
-                        name: T.lodash.isUndefined(values.name) ? '' : values.name,
-                        age: T.lodash.isUndefined(values.age) ? '' : values.age,
-                        gender: T.lodash.isUndefined(values.gender) ? '' : values.gender,
-                        nativePlace: T.lodash.isUndefined(values.nativePlace) ? '' : values.nativePlace,
-                        address: T.lodash.isUndefined(values.address) ? '' : values.address,
-                        idCard: T.lodash.isUndefined(values.idCard) ? '' : values.idCard,
-                        phoneNum: T.lodash.isUndefined(values.phoneNum) ? '' : values.phoneNum,
-                        baseInfo: T.lodash.isUndefined(values.baseInfo) ? '' : values.baseInfo,	//名字
-                        fillUserId: userId,  //后端返回
-                        id: location["params"]["data"]["id"]
-                    },
-                    memberActivity: {
-                        backFromWhere: T.lodash.isUndefined(values.backFromWhere) ? '' : values.backFromWhere,
-                        backTime: T.lodash.isUndefined(values.backTime) ? '' : (values.backTime === null || values.backTime === '') ? '' : T.helper.dateFormat(values.backTime),
-                        backType: T.lodash.isUndefined(values.backType) ? '' : values.backType,
-                        carNum: T.lodash.isUndefined(values.carNum) ? '' : values.carNum,
-                        wayCity: T.lodash.isUndefined(values.wayCity) ? '' : values.wayCity,
-                        fillUserId: userId  //后端返回
-                    },
-                    memberTouch: {
-                        isTouchSuspect: T.lodash.isUndefined(values.isTouchSuspect) ? '' : values.isTouchSuspect,	  //是否
-                        suspectName: T.lodash.isUndefined(values.suspectName) ? '' : values.suspectName,
-                        suspectIdCard: T.lodash.isUndefined(values.suspectIdCard) ? '' : values.suspectIdCard,
-                        suspectTime: T.lodash.isUndefined(values.suspectTime) ? '' : (values.suspectTime === null || values.suspectTime === '') ? '' : T.helper.dateFormat(values.suspectTime),
-                        suspectPoint: T.lodash.isUndefined(values.suspectPoint) ? '' : values.suspectPoint,
-
-                        isTouchIntimate: T.lodash.isUndefined(values.isTouchIntimate) ? '' : values.isTouchIntimate,	  //是否
-                        intimateName: T.lodash.isUndefined(values.intimateName) ? '' : values.intimateName,
-                        intimateIdCard: T.lodash.isUndefined(values.intimateIdCard) ? '' : values.intimateIdCard,
-                        intimateTime: T.lodash.isUndefined(values.intimateTime) ? '' : (values.intimateTime === null || values.intimateTime === '') ? '' : T.helper.dateFormat(values.intimateTime),
-                        intimatePoint: T.lodash.isUndefined(values.intimatePoint) ? '' : values.intimatePoint,
-
-                        isTouchInfector: T.lodash.isUndefined(values.isTouchInfector) ? '' : values.isTouchInfector,	  //是否
-                        infectorName: T.lodash.isUndefined(values.infectorName) ? '' : values.infectorName,
-                        infectorIdCard: T.lodash.isUndefined(values.infectorIdCard) ? '' : values.infectorIdCard,
-                        infectorTime: T.lodash.isUndefined(values.infectorTime) ? '' : (values.infectorTime === null || values.infectorTime === '') ? '' : T.helper.dateFormat(values.infectorTime),
-                        infectorPoint: T.lodash.isUndefined(values.infectorPoint) ? '' : values.infectorPoint,
-
-                        fillUserId: userId  //后端返回
-                    },
-                    memberCurstate: {
-                        bodyCondition: T.lodash.isUndefined(values.bodyCondition) ? '' : values.bodyCondition,	//名字
-                        hasSeek: T.lodash.isUndefined(values.hasSeek) ? '' : values.hasSeek,	//名字
-                        seekHospital: T.lodash.isUndefined(values.seekHospital) ? '' : values.seekHospital,	//名字
-                        seekTime: T.lodash.isUndefined(values.seekTime) ? '' : (values.seekTime === null || values.seekTime === '') ? '' : T.helper.dateFormat(values.seekTime),	//名字
-                        controlMeasures: T.lodash.isUndefined(values.controlMeasures) ? '' : values.controlMeasures,	//名字
-                        controlTime: T.lodash.isUndefined(values.controlTime) ? '' : (values.controlTime === null || values.controlTime === '') ? '' : T.helper.dateFormat(values.controlTime),	//名字
-                        nextMeasures: T.lodash.isUndefined(values.nextMeasures) ? '' : values.nextMeasures,	//名字
-                        fillUserId: userId  //后端返回
-                    },
+                    companyId: 0,
+                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
+                    createTime: "2020-02-17T03:23:23.495Z",
+                    evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,
+                    evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,
+                    id: isCreate ? 0 : location["params"]["data"]["id"],
+                    updateTime: "2020-02-17T03:23:23.495Z",
+                    userId: 0
                 };
                 new Promise((resolve, reject) => {
                     dispatch({
-                        type: 'addInfo/addInfoAction',
+                        type: 'companyStatistics/addInfoAction',
                         params,
                         resolve,
                         reject,
@@ -426,7 +382,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                             {...formItemLayout}
                                             label='企业名称：'
                                         >
-                                            {getFieldDecorator('name', {
+                                            {getFieldDecorator('companyName', {
                                                     rules: [
                                                         {
                                                             required: true,
@@ -448,7 +404,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                         <Form.Item
                                             label='评定等级'
                                         >
-                                            {getFieldDecorator('degree', {
+                                            {getFieldDecorator('evaluateLevel', {
                                                 rules: [
                                                     {
                                                         required: false,
@@ -457,7 +413,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                                 ],
                                                 // initialValue: T.moment(new Date().getTime()-24*60*60*1000),
                                             })(
-                                                <Radio.Group >
+                                                <Radio.Group>
                                                     <Radio value={"A"}>A</Radio>
                                                     <Radio value={"B"}>B</Radio>
                                                     <Radio value={"C"}>C</Radio>
@@ -472,7 +428,7 @@ class CompanyStatisticsEdit extends PureComponent {
                                             {...formItemLayout}
                                             label='存在的问题及整改要求：'
                                         >
-                                            {getFieldDecorator('wayCity', {}
+                                            {getFieldDecorator('evaluateContent', {}
                                             )(
                                                 <TextArea
                                                     placeholder="请填写存在的问题及整改要求"

@@ -7,6 +7,15 @@
 import EnumAPI from './../../constants/EnumAPI';
 import {postJSON, post, get} from './../../utils/core/requestTj';
 import T from './../../utils/T';
+//获取问卷
+export async function fetchPaper(params={}) {
+    return get(EnumAPI.fetchPaper, params);
+}
+//保存问卷
+export async function savePaper(params={}) {
+    return postJSON(EnumAPI.savePaper, params);
+}
+
 //fetchTreeData
 //获取树节点
 export async function fetchTreeNode(userId) {

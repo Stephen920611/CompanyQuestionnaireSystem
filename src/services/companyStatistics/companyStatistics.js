@@ -17,14 +17,18 @@ export async function fetchCompanyStatistics(params = {}) {
 export async function deleteCompanyInfo(id) {
     return del(EnumAPI.deleteCompanyInfo(id));
 }
+//新增saveCompanyInfo
+export async function saveCompanyInfo(params={}) {
+    return post(EnumAPI.saveCompanyInfo,params);
+}
 //同步
 export async function updateCompanyInfo(id) {
     return del(EnumAPI.updateCompanyInfo,id);
 }
 
 //获取详情接口fetchCompanyDetailById
-export async function fetchCompanyDetailById(params = {}) {
-    return post(EnumAPI.fetchCompanyDetailById, params);
+export async function fetchCompanyDetailById(id) {
+    return get(EnumAPI.fetchCompanyDetailById(id));
 }
 
 //获取重点人员统计数据

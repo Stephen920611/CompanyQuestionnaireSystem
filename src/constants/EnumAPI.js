@@ -35,11 +35,16 @@ const EnumAPI = {
     | 统一树的接口-开工企业评定管理
     |----------------------------------------------------------------
     */
-    fetchTreeNode: _processAPI('/tree/area-tree'), //获取树接口
-    fetchCompanyStatistics: _processAPI(''), //获取开工企业评定列表
+    fetchPaper: _processAPI('/paperBasic/get-paper'), //获取问卷
+    savePaper: _processAPI('/paperBasic/save-paper'), //保存答案
+
+    fetchTreeNode: _processAPI('/area/area-tree'), //获取树接口
+
+    fetchCompanyStatistics: _processAPI('/evaluate/page'), //获取开工企业评定列表
     deleteCompanyInfo: _processAPI(''), //删除企业填报
     updateCompanyInfo: _processAPI(''), //同步某个企业填报
-    fetchCompanyDetailById: _processAPI('/stat/list-data'), //查看详情
+    saveCompanyInfo: _processAPI('/evaluate/save'), //同步某个企业填报
+    fetchCompanyDetailById: (id) => processDataList('/evaluate/get/' + id), //查看详情
     fetchCompanyPersonNumber: _processAPI('/stat/list-data'), //获取重点人员统计
 
 

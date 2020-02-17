@@ -83,7 +83,8 @@ class CompanyStatistics extends PureComponent {
         new Promise((resolve, reject) => {
             dispatch({
                 type: 'companyStatistics/fetchTreeNodeAction',
-                userId: loginInfo.data.user.id,
+                // userId: loginInfo.data.user.id,
+                userId: 1,
                 resolve,
                 reject,
             });
@@ -95,6 +96,7 @@ class CompanyStatistics extends PureComponent {
                     expandTreeKey: response.data.length > 0 ? response.data[0].hasOwnProperty('code') ? [response.data[0].code] : [] : [],
 
                 }, () => {
+                    console.log('1111111111',response.data);
                     self.fetchDataList(response.data)
                 });
             } else {
@@ -108,24 +110,26 @@ class CompanyStatistics extends PureComponent {
         const {dispatch, form} = this.props;
         const {currentPage, selectedArea} = this.state;
         let self = this;
+        console.log(2222222222222222)
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
-
                 let params = {
-                    // current: currentPage,
-                    // size: EnumDataSyncPageInfo.defaultPageSize,
-                    userId: loginInfo.data.user.id,
-                    areaId: eventData.type === 'area' ? eventData.backId : eventData.type === 'industry' ? eventData.industryParentId: '' ,
-                    industryId: eventData.type === 'industry' ? eventData.backId : '',
-                    companyId: eventData.type === 'company' ? eventData.backId : '',
-                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,      //企业名称
+                    current: currentPage,
+                    size: EnumDataSyncPageInfo.defaultPageSize,
+                    // userId: loginInfo.data.user.id,
+                    userId: 1,
+                    // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
+                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,      //企业名称,
+                    // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
+                    evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,      //等级
+                    // companyId: eventData.type === 'company' ? eventData.backId : ''
                 };
                 // console.lo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           g(params,'params');
                 this.setState({
                     sendParams:params
                 });
-               /* new Promise((resolve, reject) => {
+                new Promise((resolve, reject) => {
                     dispatch({
                         type: 'companyStatistics/fetchCompanyStatisticsAction',
                         params,
@@ -134,7 +138,7 @@ class CompanyStatistics extends PureComponent {
                     });
                 }).then(response => {
                     if (response.code === 0) {
-                        let endData = response.data.map( (val,idx) => {
+                        let endData = response.data.list.map((val,idx) => {
                             return {
                                 ...val,
                                 key: idx + 1,
@@ -147,7 +151,7 @@ class CompanyStatistics extends PureComponent {
                     } else {
                         T.prompt.error(response.msg);
                     }
-                });*/
+                });
             }
         });
     };
@@ -396,22 +400,22 @@ class CompanyStatistics extends PureComponent {
             },
             {
                 title: '县市区',
-                dataIndex: 'areaName',
+                dataIndex: 'areanName',
                 // width: '8%',
             },
             {
                 title: '企业名称',
-                dataIndex: 'industryName',
-                // width: '8%',
-            },
-            {
-                title: '评定等级',
                 dataIndex: 'companyName',
                 // width: '8%',
             },
             {
+                title: '评定等级',
+                dataIndex: 'evaluteLevel',
+                // width: '8%',
+            },
+            {
                 title: '评定时间',
-                dataIndex: 'bodyAbnormalNum6',
+                dataIndex: 'createTime',
                 // width: '8%',
             },
 
@@ -512,7 +516,7 @@ class CompanyStatistics extends PureComponent {
                                     <Form.Item
                                         label='评定等级'
                                     >
-                                        {getFieldDecorator('degree', {
+                                        {getFieldDecorator('evaluateLevel', {
                                             rules: [
                                                 {
                                                     required: false,
@@ -520,7 +524,7 @@ class CompanyStatistics extends PureComponent {
                                                 },
                                             ],
                                             // initialValue: T.moment(new Date().getTime()-24*60*60*1000),
-                                            initialValue: T.moment(new Date().getTime()),
+                                            // initialValue: T.moment(new Date().getTime()),
                                         })(
                                             <Radio.Group onChange={this.onChange}>
                                                 <Radio value={"A"}>A</Radio>
@@ -558,8 +562,7 @@ class CompanyStatistics extends PureComponent {
                                 <Table
                                     loading={fetchStatInfoStatus}
                                     columns={columns}
-                                    // dataSource={tableData}
-                                    dataSource={data}
+                                    dataSource={tableData}
                                     // rowSelection={rowSelection}
                                     pagination={false}
                                     scroll={{ y: 480 }}

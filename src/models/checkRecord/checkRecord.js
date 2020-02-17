@@ -14,6 +14,8 @@ import {
     fetchMemberInfoList,
     fetchMemberInfoById,
     getAllDrops,
+    fetchPaper,
+    savePaper,
 } from '@/services/checkRecord/checkRecord';
 import T from '../../utils/T';
 
@@ -39,6 +41,25 @@ export default {
     },
 
     effects: {
+        //获取问卷fetchPaperAction
+        * fetchPaperAction({params, resolve, reject}, {call, put}) {
+            try {
+                const response = yield call(fetchPaper, params);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+        },
+        //保存问卷
+        * savePaperAction({params, resolve, reject}, {call, put}) {
+            try {
+                const response = yield call(savePaper, params);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+        },
+
         //根据公司id,查询部门树
         * fetchTreeDepartmentAction({companyId, resolve, reject}, {call, put}) {
             try {
@@ -48,6 +69,7 @@ export default {
                 reject(error);
             }
         },
+
 
         //获取列表页面
         * fetchMemberInfoListAction({params, resolve, reject}, {call, put}) {

@@ -37,32 +37,31 @@ class CompanyStatisticsDetail extends PureComponent {
         //验证是否刷新页面
         T.auth.returnSpecialMainPage(location, '/companyStatistics');
         if (location.hasOwnProperty("params") && location["params"].hasOwnProperty("data")) {
-            self.setState({
+            /*self.setState({
                 industryId: location["params"]["data"]['industryId']
-            });
-            /*new Promise((resolve, reject) => {
+            });*/
+            console.log(location["params"]["data"]);
+            new Promise((resolve, reject) => {
                 dispatch({
                     type: 'companyStatistics/fetchCompanyDetailByIdAction',
-                    params:{
-                        id: location["params"]["data"]["id"],
-                    },
+                    id: location["params"]["data"]["id"],
                     resolve,
                     reject,
                 });
             }).then(response => {
-                console.log('11111',response.data);
+                console.log('11111', response.data);
 
                 if (response.code === 0) {
                     self.setState({
                         // activities: T.lodash.isUndefined(activities[0]) ? {} : activities[0],
                         // currentInfo: T.lodash.isUndefined(currnets[0]) ? {} : currnets[0],
-                        member:response.data,
+                        member: response.data,
                         // touch: T.lodash.isUndefined(touch[0]) ? {} : touch[0],
                     })
                 } else {
                     T.prompt.error(response.msg);
                 }
-            });*/
+            });
         }
     }
 
@@ -112,7 +111,7 @@ class CompanyStatisticsDetail extends PureComponent {
                                 <Col span={6}>
                                     <span>评定等级：</span>
                                     <span>
-                                        {member.hasOwnProperty('name') ? member.name : '---'}
+                                        {member.hasOwnProperty('evaluateLevel') ? member.evaluateLevel : '---'}
                                     </span>
                                 </Col>
                             </Row>
@@ -120,7 +119,7 @@ class CompanyStatisticsDetail extends PureComponent {
                                 <Col span={6}>
                                     <span>存在的问题及整改要求：</span>
                                     <span>
-                                        {member.hasOwnProperty('idCard') ? member.idCard : '---'}
+                                        {member.hasOwnProperty('evaluateContent') ? member.evaluateContent : '---'}
                                     </span>
                                 </Col>
 
