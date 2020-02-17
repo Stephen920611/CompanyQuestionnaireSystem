@@ -29,13 +29,13 @@ export default {
                 T.prompt.error(response.msg)
             }
             //如果是管理员账户，那就给最高权限
-            // if(response.data.static_auth === 0){
-            //     response["currentAuthority"] = "user";
-            // }else if (response.data.static_auth === 1){
-            //     response["currentAuthority"] = "admin";
-            // }
+            if(response.data.user.role === 2){
+                response["currentAuthority"] = "user";
+            }else {
+                response["currentAuthority"] = "admin";
+            }
 
-            response["currentAuthority"] = "admin";
+            // response["currentAuthority"] = "admin";
 
             //类似于reducer，
             yield put({
@@ -68,7 +68,7 @@ export default {
                 }
                 yield put(routerRedux.replace({
                     // pathname: redirect || (response.data.static_auth === 0 ? '/addInfo': (response.data.static_auth === 1) ? '/jobStatistics':'/'),
-                    pathname: redirect || (response.data.static_auth === 0 ? '/addInfo':'/'),
+                    pathname: redirect || (response.data.user.role === 2 ? '/checkRecord':'/'),
                     loginInfo: response
                 }));
             }

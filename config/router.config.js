@@ -26,7 +26,7 @@ export default [
         Routes: ['src/pages/Authorized'],
         routes: [
             // dashboard
-            {path: '/', redirect: '/checkRecord', authority: ['admin']},
+            {path: '/', redirect: '/companyStatistics', authority: ['admin']},
             /*----------------- 首页 -------------------*/
             // {
             //     path: '/dashboard',
@@ -54,12 +54,12 @@ export default [
                 name: 'checkRecord',
                 icon: 'home',
                 component: './CheckRecord/CheckRecordList',
-                authority: ['admin']
+                authority: ['user']
             },
             {
                 path: '/checkRecord/showDetail',
                 component: './CheckRecord/CheckRecordDetail',
-                authority: ['admin']
+                authority: ['user']
             },
             /*----------------- 开工企业评定管理 -------------------*/
             {
