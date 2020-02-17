@@ -410,7 +410,7 @@ class CompanyStatistics extends PureComponent {
             },
             {
                 title: '评定等级',
-                dataIndex: 'evaluteLevel',
+                dataIndex: 'evaluateLevel',
                 // width: '8%',
             },
             {

@@ -23,7 +23,7 @@ export async function saveCompanyInfo(params={}) {
 }
 //同步
 export async function updateCompanyInfo(params={}) {
-    return put(EnumAPI.updateCompanyInfo,params={});
+    return put(EnumAPI.updateCompanyInfo,params);
 }
 
 //获取详情接口fetchCompanyDetailById

@@ -131,8 +131,10 @@ class CompanyStatisticsEdit extends PureComponent {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let userId = loginInfo.data.user.id;
+                console.log('login',loginInfo)
+                console.log('editData',editData);
                 let params = {
-                    companyId: isCreate ? loginInfo.data.user.companyId: editData["companyId"],
+                    areaId: loginInfo.data.user.areaId,
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
                     createTime: isCreate ? T.moment(new Date().getTime()): editData["createTime"],
                     evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,
