@@ -75,6 +75,7 @@ class CheckRecordList extends PureComponent {
                 questionArray: []
             },
             isDownLoad: false,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载
+            paperId:0,
 
         }
     }
@@ -133,7 +134,7 @@ class CheckRecordList extends PureComponent {
                 let sendParams = {
                     // paperAnswerStr:{
                         paperBasic:{
-                            id:0,
+                            id:self.state.paperId,
                             userId: userId,
                             // userId: 4,
                             // area: values.area,	//县市区名字
@@ -168,8 +169,13 @@ class CheckRecordList extends PureComponent {
                     });
                 }).then(response => {
                     if (response.code === 0) {
+                        console.log('resss',response.data);
                         T.prompt.success("更新成功");
                         // self.resetForm();
+                        self.setState({
+                            paperId:response.data,
+                            isDownLoad:true
+                        })
                         
                     } else {
                         T.prompt.error(response.msg);
@@ -268,6 +274,7 @@ class CheckRecordList extends PureComponent {
             isCreate,
             question,
             isDownLoad,
+            paperId,
         } = this.state;
         const {paperBasic, questionArray} = question;
         let loginInfo = T.auth.getLoginInfo();
@@ -387,7 +394,7 @@ class CheckRecordList extends PureComponent {
             },
         ];
 
-        let apiHref = `${window.ENV.apiDomain}/word/download-paper?userId=${loginInfo.data.user.id}&id=${1}`;
+        let apiHref = `${window.ENV.apiDomain}/word/download-paper?userId=${loginInfo.data.user.id}&id=${paperId}`;
 
         return (
             <PageHeaderWrapper
@@ -534,7 +541,7 @@ class CheckRecordList extends PureComponent {
                                             {getFieldDecorator('phoneNumber', {
                                                 rules: [
                                                     {
-                                                        required: false,
+                                                        required: true,
                                                         message: "请输入联系电话",
                                                     },
                                                     // {
