@@ -46,7 +46,20 @@ class Register extends Component {
         visible: false,
         help: '',
         prefix: '86',
-        userTypeSelect: [],     //用户类型
+        userTypeSelect: [
+            {
+                name: "市级管理员",
+                value: 0,
+            },
+            {
+                name: "区县级管理员",
+                value: 1,
+            },
+            {
+                name: "企业用户",
+                value: 2,
+            },
+        ],     //用户类型
         citySelect: [],     //县市区
     };
 
@@ -67,8 +80,9 @@ class Register extends Component {
         clearInterval(this.interval);
     }
 
+    //获取验证码
     onGetCaptcha = () => {
-        let count = 59;
+        let count = 179;
         this.setState({count});
         this.interval = setInterval(() => {
             count -= 1;
@@ -204,7 +218,6 @@ class Register extends Component {
             userTypeSelect,
             citySelect
         } = this.state;
-        console.log(userTypeSelect,'userTypeSelect');
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
@@ -240,11 +253,7 @@ class Register extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: formatMessage({id: 'validation.email.required'}),
-                                },
-                                {
-                                    type: 'email',
-                                    message: formatMessage({id: 'validation.email.wrong-format'}),
+                                    message: "请选择用户类型",
                                 },
                             ],
                         })(
@@ -262,11 +271,7 @@ class Register extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: formatMessage({id: 'validation.email.required'}),
-                                },
-                                {
-                                    type: 'email',
-                                    message: formatMessage({id: 'validation.email.wrong-format'}),
+                                    message: "请选择县市区",
                                 },
                             ],
                         })(
@@ -279,7 +284,7 @@ class Register extends Component {
                             </Select>
                         )}
                     </FormItem>
-                    <FormItem label="行业">
+                   {/* <FormItem label="行业">
                         {getFieldDecorator('trade', {
                             rules: [
                                 {
@@ -300,7 +305,7 @@ class Register extends Component {
                                 }
                             </Select>
                         )}
-                    </FormItem>
+                    </FormItem>*/}
                     <FormItem label="企业名称">
                         {getFieldDecorator('companyName', {
                             rules: [

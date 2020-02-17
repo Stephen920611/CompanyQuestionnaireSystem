@@ -383,6 +383,9 @@ class ForgetPassword extends Component {
                         >
                             立即找回
                         </Button>
+                        <Link className={styles.login} to="/User/Login">
+                            <FormattedMessage id="app.register.sign-in"/>
+                        </Link>
                     </FormItem>
                 </Form>
             </div>
