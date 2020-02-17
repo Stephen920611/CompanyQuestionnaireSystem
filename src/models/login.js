@@ -21,7 +21,6 @@ export default {
     effects: {
         * login({payload}, {call, put}) {
             const response = yield call(accountLogin, payload);
-            console.log(response,'response');
             //先默认清除登录信息
             T.auth.clearLoginInfo();
             //登录失败提示信息
@@ -81,6 +80,10 @@ export default {
         * logout({userId}, {call,put}) {
             //退出登录要调一下接口
             const response = yield call(logout, {userId});
+            //登录失败提示信息
+            if(response.code === 0){
+                T.prompt.success("用户退出成功");
+            }
             yield put({
                 type: 'changeLoginStatus',
                 payload: {
