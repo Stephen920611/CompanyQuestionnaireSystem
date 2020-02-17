@@ -139,7 +139,7 @@ class Register extends Component {
                 }).then(response => {
                     if (response.code === 0) {
                         form.setFieldsValue({
-                            phone: response.msg,
+                            captcha: response.msg,
                         });
                         self.setState({
                             codeBack: response.msg
