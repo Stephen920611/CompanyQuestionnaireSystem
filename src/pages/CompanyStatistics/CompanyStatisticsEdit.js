@@ -70,6 +70,7 @@ class CompanyStatisticsEdit extends PureComponent {
             member: {},
             touch: [],
             isCreate: true,
+            editData:{}
 
 
         }
@@ -82,84 +83,61 @@ class CompanyStatisticsEdit extends PureComponent {
         //验证是否刷新页面
         T.auth.returnSpecialMainPage(location, '/companyStatistics');
         //获取重点人员统计
-        /*new Promise((resolve, reject) => {
-            dispatch({
-                type: 'companyStatistics/fetchCompanyPersonNumberAction',
-                params: {
-                    type: 'BASE_INFO'
-                },
-                resolve,
-                reject,
-            });
-        }).then(response => {
-            if (response.code === 0) {
-                self.setState({
-                    baseInfoSelect: response.data
-                })
-            } else {
-                T.prompt.error(response.msg);
-            }
-        });*/
-
         if (location.hasOwnProperty("params") && location["params"].hasOwnProperty("data") && location["params"].hasOwnProperty("status")) {
             this.setState({
                 isCreate: location["params"]["status"],
             })
+            if(!location["params"]["status"]){
 
-            //查看详情
-            /*new Promise((resolve, reject) => {
-                dispatch({
-                    type: 'companyStatistics/fetchCompanyDetailByIdAction',
-                    id: location["params"]["data"]["id"],
-                    resolve,
-                    reject,
+                //查看详情
+                new Promise((resolve, reject) => {
+                    dispatch({
+                        type: 'companyStatistics/fetchCompanyDetailByIdAction',
+                        id: location["params"]["data"]["id"],
+                        resolve,
+                        reject,
+                    });
+                }).then(response => {
+                    if (response.code === 0) {
+                        console.log('11111',response.data);
+
+                        const {companyName, evaluateContent, evaluateLevel, id} = response.data;
+                        self.setState({
+                            editData: response.data
+                        });
+                        let formValue = {
+                            companyName: companyName,	//县市区名字
+                            evaluateContent: evaluateContent,
+                            evaluateLevel: evaluateLevel,
+                        };
+                        self.props.form.setFieldsValue(formValue);
+                    } else {
+                        T.prompt.error(response.msg);
+                    }
                 });
-            }).then(response => {
-                if (response.code === 0) {
-                    const {currnets, member, touch, activities} = response.data;
+            }
 
-                    let formValue = {
-                        area: member.area,	//县市区名字
-                        name: member.name,
-                        age: member.age,
-                        phoneNum: member.phoneNum,
-                        baseInfo: member.baseInfo,
 
-                        backTime: T.lodash.isUndefined(activities[0]) ? '' : (activities[0].backTime === null || activities[0].backTime === '') ? null : T.moment( new Date(activities[0].backTime).getTime()),
-
-                        isTouchSuspect: T.lodash.isUndefined(touch[0]) ? '' : touch[0].isTouchSuspect,	  //是否
-                        suspectPoint: T.lodash.isUndefined(touch[0]) ? '' : touch[0].suspectPoint,
-
-                        seekTime: T.lodash.isUndefined(currnets[0]) ? '' : (currnets[0].seekTime === null || currnets[0].seekTime === '') ? null : T.moment( new Date(currnets[0].seekTime).getTime()),
-                        controlTime: T.lodash.isUndefined(currnets[0]) ? '' : (currnets[0].controlTime === null || currnets[0].controlTime === '') ? null : T.moment( new Date(currnets[0].controlTime).getTime()),
-                    };
-
-                    self.props.form.setFieldsValue(formValue);
-                } else {
-                    T.prompt.error(response.msg);
-                }
-            });*/
         }
     }
 
     //提交功能
     onSubmitData = (e) => {
         let self = this;
-        const{isCreate} = this.state;
+        const{isCreate,editData} = this.state;
         const {dispatch, form, location} = this.props;
         e.preventDefault();
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let userId = loginInfo.data.user.id;
-                console.log(values, 'values');
                 let params = {
-                    companyId: loginInfo.data.user.companyId,
+                    companyId: isCreate ? loginInfo.data.user.companyId: editData["companyId"],
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
-                    createTime: T.moment(new Date().getTime()),
+                    createTime: isCreate ? T.moment(new Date().getTime()): editData["createTime"],
                     evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,
                     evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,
-                    id: isCreate ? 0 : location["params"]["data"]["id"],
+                    id: isCreate ? 0 : editData["id"],
                     // updateTime: T.helper.dateFormat(T.moment.locale('zh-cn'),'YYYY-MM-DD HH:mm:ss'),
                     updateTime: T.moment(new Date().getTime()),
                     userId:userId

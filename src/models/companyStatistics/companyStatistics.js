@@ -70,9 +70,9 @@ export default {
         },
 
         //更新企业填报
-        * updateCompanyInfoAction({id, resolve, reject}, {call, put}) {
+        * updateCompanyInfoAction({params, resolve, reject}, {call, put}) {
             try {
-                const response = yield call(updateCompanyInfo, id);
+                const response = yield call(updateCompanyInfo, params);
                 resolve(response);
             } catch (error) {
                 reject(error);

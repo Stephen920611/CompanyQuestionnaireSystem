@@ -96,8 +96,8 @@ class CompanyStatistics extends PureComponent {
                     expandTreeKey: response.data.length > 0 ? response.data[0].hasOwnProperty('code') ? [response.data[0].code] : [] : [],
 
                 }, () => {
-                    console.log('1111111111',response.data);
-                    self.fetchDataList(response.data)
+                    // console.log('1111111111',response.data);
+                    self.fetchDataList(response.data[0])
                 });
             } else {
                 T.prompt.error(response.msg);
@@ -110,7 +110,6 @@ class CompanyStatistics extends PureComponent {
         const {dispatch, form} = this.props;
         const {currentPage, selectedArea} = this.state;
         let self = this;
-        console.log('2222222222222222',T.auth.getLoginInfo());
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
@@ -118,14 +117,13 @@ class CompanyStatistics extends PureComponent {
                     current: currentPage,
                     size: EnumDataSyncPageInfo.defaultPageSize,
                     userId: loginInfo.data.user.id,
-                    areaId: loginInfo.data.user.areaId,
+                    areaId:  eventData.id,
                     // areaId: eventData.type === 'area' ? eventData.id : eventData.type === 'industry' ? eventData.industryParentId: '' ,
-                    companyName: loginInfo.data.user.companyName,      //企业名称,
                     // areaId: eventData.length > 0 ? eventData[0].code: eventData.code,
+                    companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,       //企业名称,
                     evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,      //等级
                     // companyId: eventData.type === 'company' ? eventData.backId : ''
                 };
-                // console.lo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           g(params,'params');
                 this.setState({
                     sendParams:params
                 });
@@ -224,9 +222,10 @@ class CompanyStatistics extends PureComponent {
         this.setState({
             selectTreeKey: keys,
             selectedArea: eventData.name,
-            clickTree: eventData,
+            clickTree: eventData.dataRef,
         }, () => {
-            self.fetchDataList(eventData)
+            console.log('eventData',eventData)
+            self.fetchDataList(eventData.dataRef)
         });
     };
 
@@ -351,9 +350,10 @@ class CompanyStatistics extends PureComponent {
     //删除
     deleteData = (e, key) => {
         const {dispatch} = this.props;
+        const {clickTree} = this.state;
         let self = this;
         //删除
-        /*new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
            dispatch({
                type: 'companyStatistics/deleteCompanyInfoAction',
                id:key.id,
@@ -363,12 +363,12 @@ class CompanyStatistics extends PureComponent {
        }).then(response => {
            if (response.code === 0) {
                T.prompt.success('删除成功！');
-               self.fetchDataList();
+               self.fetchDataList(clickTree);
 
            } else {
                T.prompt.error(response.msg);
            }
-       });*/
+       });
     };
 
 
@@ -430,7 +430,9 @@ class CompanyStatistics extends PureComponent {
                             <Divider type="vertical" />
                             <a onClick={e => this.editDetail(e, record)}>编辑</a>
                             <Divider type="vertical" />
-                            <a onClick={e => this.deleteData(e, record)}>删除</a>
+                            <Popconfirm title="是否要删除此行？" onConfirm={e => this.deleteData(e, record)}>
+                                <a>删除</a>
+                            </Popconfirm>
                         </span>
                     );
                 },
@@ -464,7 +466,7 @@ class CompanyStatistics extends PureComponent {
                 isSpecialBreadcrumb={true}
             >
                 <Row gutter={24}>
-                    {role == 2 ? '':
+                    {role == 1 ? '':
                         <Col xl={6} lg={6} md={6} sm={24} xs={24}>
                             <Card
                                 title="资源列表"
@@ -492,7 +494,7 @@ class CompanyStatistics extends PureComponent {
                         </Col>
 
                     }
-                    <Col span={role === 2 ? 24 : 18} className={styles.dataSourceTableList}>
+                    <Col span={role === 1 ? 24 : 18} className={styles.dataSourceTableList}>
                         <Form layout="inline" onSubmit={this.searchDataSource}>
                             <Row className={`${styles.dataSourceTitle} ${styles.tableListForms}`}
                                  style={{marginBottom: 10}}>
