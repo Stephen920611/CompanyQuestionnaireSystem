@@ -4,6 +4,7 @@
  * @Author Stephen
  * @license dongfangdianzi
  */
+import cookiesUtil from 'js-cookie';
 import * as store from './storage';
 import "./../../config/ENV";
 import router from 'umi/router';
@@ -11,7 +12,18 @@ import router from 'umi/router';
 class Auth {
 
     constructor(){
+        // 登录成功的cookie key
+        this.loginSuccessCookieKey = window.ENV.login.cookieKey;
     }
+
+    /**
+     * 验证是否登录
+     * @returns {boolean}
+     */
+    isLogin() {
+        return window.ENV.login.isCheckLogin ? cookiesUtil.get(this.loginSuccessCookieKey) : true;
+    }
+
     /**
      * 验证sid是否失效
      * @param response

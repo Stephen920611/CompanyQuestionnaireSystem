@@ -7,6 +7,7 @@ import router from 'umi/router';
 import GlobalHeader from '@/components/GlobalHeader';
 import TopNavHeader from '@/components/TopNavHeader';
 import styles from './Header.less';
+import T from './../utils/T';
 
 const {Header} = Layout;
 
@@ -74,6 +75,7 @@ class HeaderView extends Component {
         if (key === 'logout') {
             dispatch({
                 type: 'login/logout',
+                userId: T.auth.getLoginInfo().data.user.id
             });
         }
     };

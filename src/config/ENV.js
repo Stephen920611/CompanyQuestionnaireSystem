@@ -21,7 +21,7 @@ window.ENV = (function () {
         login: {
             loginInfoKey : "__login_info__",
             errorCode: 900,                                 // 未登录的error code
-            isCheckLogin: false,                            // web端是否验证登录
+            isCheckLogin: true,                            // web端是否验证登录
             cookieKey: '__login_solution_user_info__',               // 登录成功的cookie key, 用于验证当前页面是否登录
             defaultRedirectUrl: rootPath + 'overview/list',  // 登录成功默认重定向的url
             loginUrl: rootPath + 'login',                   // 登录页面url

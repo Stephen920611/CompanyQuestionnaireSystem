@@ -1,6 +1,10 @@
 import {routerRedux} from 'dva/router';
 import {stringify} from 'qs';
 import {accountLogin, getFakeCaptcha} from '@/services/api';
+import {
+    logout
+} from '@/services/register/register';
+import cookiesUtil from 'js-cookie';
 import {setAuthority} from '@/utils/authority';
 import {getPageQuery} from '@/utils/utils';
 import {reloadAuthorized} from '@/utils/Authorized';
@@ -74,7 +78,9 @@ export default {
             yield call(getFakeCaptcha, payload);
         },
 
-        * logout(_, {put}) {
+        * logout({userId}, {call,put}) {
+            //退出登录要调一下接口
+            const response = yield call(logout, {userId});
             yield put({
                 type: 'changeLoginStatus',
                 payload: {
@@ -90,8 +96,8 @@ export default {
                 // console.log(window.location.href,'window.location.href');
                 // console.log(window.location.pathname,'window.location.pathname');
                 T.auth.clearLoginInfo();
-                T.storage.clearStorage('taskId');
-                T.storage.clearStorage('HtmlType');
+                //清除cookie
+                cookiesUtil.remove(window.ENV.login.cookieKey, { path: '' });
                 yield put(
                     routerRedux.replace({
                         pathname: '/user/login',
