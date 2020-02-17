@@ -7,8 +7,9 @@
 
 window.ENV = (function () {
     let rootPath = '/pw/';     // 路由的根路径
-    // let apiDomain = "http://49.232.51.60:8086/api"; //测试api接口
-    let apiDomain = "http://61.156.14.61:10007/api"; //线上api接口
+    let apiDomain = "http://49.232.51.60:8086/api"; //测试api接口
+    // let apiDomain = "http://192.168.2.100:8086/api"; //测试api接口
+    // let apiDomain = "http://61.156.14.61:10007/api"; //线上api接口
 
     return {
         apiDomain: apiDomain,         // api请求接口   测试服务器
