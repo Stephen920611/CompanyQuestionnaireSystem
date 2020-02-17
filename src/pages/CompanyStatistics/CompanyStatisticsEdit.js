@@ -133,15 +133,16 @@ class CompanyStatisticsEdit extends PureComponent {
             if (!err) {
                 let loginInfo = T.auth.getLoginInfo();
                 let userId = loginInfo.data.user.id;
+                //TODO 高毅要求不传updateTime，createTime，暂时不传
                 let params = {
                     areaId:  isCreate ? areaId : editData["areaId"],
                     companyName: T.lodash.isUndefined(values.companyName) ? '' : values.companyName,
-                    createTime: isCreate ? T.moment(new Date().getTime()): editData["createTime"],
+                    // createTime: isCreate ? T.moment(new Date().getTime()): editData["createTime"],
                     evaluateContent: T.lodash.isUndefined(values.evaluateContent) ? '' : values.evaluateContent,
                     evaluateLevel: T.lodash.isUndefined(values.evaluateLevel) ? '' : values.evaluateLevel,
                     id: isCreate ? 0 : editData["id"],
                     // updateTime: T.helper.dateFormat(T.moment.locale('zh-cn'),'YYYY-MM-DD HH:mm:ss'),
-                    updateTime: T.moment(new Date().getTime()),
+                    // updateTime: T.moment(new Date().getTime()),
                     userId:userId
                 };
                 new Promise((resolve, reject) => {
