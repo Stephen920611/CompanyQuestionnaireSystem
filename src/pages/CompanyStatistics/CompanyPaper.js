@@ -74,7 +74,14 @@ class CompanyPaper extends PureComponent {
         const {dispatch, location} = this.props;
 
         // this.fetchDataList();
-        this.fetchTreeData();
+        let loginInfo = T.auth.getLoginInfo();
+        let self = this;
+        console.log(loginInfo);
+        if(loginInfo.data.user.role === 0){
+            this.fetchTreeData();
+        }else{
+            self.fetchDataList();
+        }
     }
 
     fetchTreeData = () => {
@@ -84,8 +91,8 @@ class CompanyPaper extends PureComponent {
         new Promise((resolve, reject) => {
             dispatch({
                 type: 'companyStatistics/fetchTreeNodeAction',
-                // userId: loginInfo.data.user.id,
-                userId: 1,
+                userId: loginInfo.data.user.id,
+                // userId: 1,
                 resolve,
                 reject,
             });
