@@ -64,7 +64,7 @@ const Singleton = (function () {
  * @return {Promise}
  * @private
  */
-const _request = (options = {}, isLogin = false) => {
+const _request = (options = {}, isLogin = false, isRegister = false) => {
     // const successCode = window.ENV.apiSuccessCode;
     return new Promise((resolve, reject) => {
         const { errorCode, cookieKey, isCheckLogin } = window.ENV.login;
@@ -93,7 +93,7 @@ const _request = (options = {}, isLogin = false) => {
                 //     });
                 // }
                 let cookieHas = cookiesUtil.get(cookieKey);
-                if(T.lodash.isUndefined(cookieHas)){
+                if(T.lodash.isUndefined(cookieHas) && !isRegister){
                     window.location.href = "/user/login";
                     T.prompt.error("登录失效，请重新登录");
                     window.g_app._store.dispatch({
@@ -128,7 +128,7 @@ const _request = (options = {}, isLogin = false) => {
  * @returns {Promise}
  */
 
-export function get(url, params = {}, options = {}, isLogin = false) {
+export function get(url, params = {}, options = {}, isLogin = false, isRegister = false) {
     //如果是login不需要sid
     let hasSidParams;
     if (isLogin) {
@@ -145,7 +145,7 @@ export function get(url, params = {}, options = {}, isLogin = false) {
         }
     });
 
-    return _request(options, isLogin);
+    return _request(options, isLogin, isRegister);
 }
 
 /**
@@ -156,7 +156,7 @@ export function get(url, params = {}, options = {}, isLogin = false) {
  * @param {boolean} isLogin 是否是登录状态，如果是login不需要sid
  * @returns {Promise}
  */
-export function post(url, params = {}, options = {}, isLogin = false) {
+export function post(url, params = {}, options = {}, isLogin = false, isRegister = false) {
     //如果是login不需要sid
     let hasSidParams;
     if (isLogin) {
@@ -179,7 +179,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
         }
     }, options);
 
-    return _request(options, isLogin);
+    return _request(options, isLogin, isRegister);
 }
 
 
@@ -192,7 +192,7 @@ export function post(url, params = {}, options = {}, isLogin = false) {
  * @param {boolean} urlHasSid url里是否还有sid，后端有时候需要一个数组，sid放在url上显示
  * @returns {Promise}
  */
-export function postJSON(url, params = {}, options = {}, isLogin = false, urlHasSid = false, hasToken = true) {
+export function postJSON(url, params = {}, options = {}, isLogin = false, urlHasSid = false, hasToken = true, isRegister = false) {
     //如果是login不需要sid
     let hasSidParams;
     if(isLogin){
@@ -227,7 +227,7 @@ export function postJSON(url, params = {}, options = {}, isLogin = false, urlHas
         }, options);
     }
 
-    return _request(options, isLogin);
+    return _request(options, isLogin, isRegister);
 }
 
 

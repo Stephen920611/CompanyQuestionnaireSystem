@@ -11,7 +11,7 @@ import T from './../../utils/T';
 
 //查询所有县市区
 export async function fetchAllArea(params = {}) {
-    return get(EnumAPI.fetchAllArea, params);
+    return get(EnumAPI.fetchAllArea, params, {}, false, true);
 }
 
 //发送验证码
