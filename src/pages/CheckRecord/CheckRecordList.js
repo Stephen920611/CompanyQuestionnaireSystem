@@ -99,7 +99,22 @@ class CheckRecordList extends PureComponent {
             if (response.code === 0) {
                 self.setState({
                     question: response.data
-                })
+                });
+                const{paperBasic} = response.data;
+                let formValue = {
+                    companyName: T.lodash.isUndefined(paperBasic.companyName) ? '' : paperBasic.companyName,
+                    addressName: T.lodash.isUndefined(paperBasic.addressName) ? '' : paperBasic.addressName,
+                    phoneNumber: T.lodash.isUndefined(paperBasic.phoneNumber) ? '' : paperBasic.phoneNumber,
+                    reportUser: T.lodash.isUndefined(paperBasic.reportUser) ? '' : paperBasic.reportUser,
+                    registeredNum: T.lodash.isUndefined(paperBasic.registeredNum) ? '' : paperBasic.registeredNum,
+                    registeredNonlocalNum: T.lodash.isUndefined(paperBasic.registeredNonlocalNum) ? '' : paperBasic.registeredNonlocalNum,
+                    registeredHubeiNum: T.lodash.isUndefined(paperBasic.registeredHubeiNum) ? '' : paperBasic.registeredHubeiNum,
+                    onguardNum: T.lodash.isUndefined(paperBasic.onguardNum) ? '' : paperBasic.onguardNum,
+                    onguardNonlocalNum: T.lodash.isUndefined(paperBasic.onguardNonlocalNum) ? '' : paperBasic.onguardNonlocalNum,
+                    quarantineRoomNum: T.lodash.isUndefined(paperBasic.quarantineRoomNum) ? '' : paperBasic.quarantineRoomNum,
+                    propose: T.lodash.isUndefined(paperBasic.propose) ? '' : paperBasic.propose,
+                };
+                self.props.form.setFieldsValue(formValue);
             } else {
                 T.prompt.error(response.msg);
             }
@@ -130,7 +145,7 @@ class CheckRecordList extends PureComponent {
                     }
 
                 });
-
+        console.log('1111111',111111111111)
                 let sendParams = {
                     // paperAnswerStr:{
                         paperBasic:{
@@ -216,6 +231,14 @@ class CheckRecordList extends PureComponent {
             })
         )
     };
+    renderRadio = (data)=>{
+        return data.map((item,index)=>{
+            return(
+                <Radio value={item.index}>{item.value}</Radio>
+            )
+        })
+
+    };
     renderQuestion = (data) => {
         const {
             fetchStatus,
@@ -225,14 +248,21 @@ class CheckRecordList extends PureComponent {
             formItemLayout,
             formItemHalf,
         } = this.state;
+        let self = this;
+        let checkVal = '';
         return (
             data.map((item, idx) => {
+                item.operationList.map((val,index)=>{
+                    if(val.isCheck){
+                        checkVal = val.index;
+                    }
+                });
                 if(idx === 6){
                     return (
                         <Row className={styles.detailTitle}>
                             <Col span={24}>
                                 <Form.Item
-                                    {...formItemLayout}
+                                    {...formItemHalf}
                                     label={(idx+1) +'、'+ item.questionContent}
                                 >
                                     {getFieldDecorator('question' + item.id, {
@@ -242,6 +272,7 @@ class CheckRecordList extends PureComponent {
                                                     message: "请选择",
                                                 },
                                             ],
+                                            initialValue: checkVal,
                                         }
                                     )(
                                         <Radio.Group>
@@ -261,19 +292,21 @@ class CheckRecordList extends PureComponent {
                         <Row className={styles.detailTitle}>
                             <Col span={24}>
                                 <Form.Item
-                                    {...formItemLayout}
+                                    {...formItemHalf}
                                     label={(idx+1) +'、'+ item.questionContent}
                                 >
                                     {getFieldDecorator('question' + item.id, {
                                             rules: [
                                                 {
-                                                    required: idx === 5?false:true,
+                                                    required: idx === 5 ? false:true,
                                                     message: "请选择",
                                                 },
                                             ],
+                                            initialValue: checkVal,
                                         }
                                     )(
                                         <Radio.Group>
+                                            {/*self.renderRadio(item.operationList)*/}
                                             <Radio value={1}>是</Radio>
                                             <Radio value={0}>否</Radio>
                                         </Radio.Group>
