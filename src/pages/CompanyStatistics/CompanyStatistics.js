@@ -84,8 +84,8 @@ class CompanyStatistics extends PureComponent {
         new Promise((resolve, reject) => {
             dispatch({
                 type: 'companyStatistics/fetchTreeNodeAction',
-                // userId: loginInfo.data.user.id,
-                userId: 1,
+                userId: loginInfo.data.user.id,
+                // userId: 1,
                 resolve,
                 reject,
             });
