@@ -75,7 +75,7 @@ class CheckRecordList extends PureComponent {
                 questionArray: []
             },
             isDownLoad: true,      //是否可让下载，只有保存成功后返回id才能下载，否则不能下载, true是禁用，false是不禁用
-            paperId:0,
+            paperId:null,
 
         }
     }
@@ -90,7 +90,6 @@ class CheckRecordList extends PureComponent {
 
         let self = this;
         let loginInfo = T.auth.getLoginInfo();
-        console.log('11111',loginInfo);
         let userId = loginInfo.data.user.id;
         new Promise((resolve, reject) => {
             dispatch({
@@ -154,7 +153,7 @@ class CheckRecordList extends PureComponent {
                 let params = {
                     // paperAnswerStr:{
                         paperBasic:{
-                            id:self.state.paperId,
+                            id:paperBasic.hasOwnProperty('id')? paperBasic.id === null ? self.state.paperId: paperBasic.id : self.state.paperId,
                             userId: userId,
                             // userId: 4,
                             // area: values.area,	//县市区名字
