@@ -97,8 +97,11 @@ class CompanyPaper extends PureComponent {
                     expandTreeKey: response.data.length > 0 ? response.data[0].hasOwnProperty('code') ? [response.data[0].code] : [] : [],
 
                 }, () => {
-                    // console.log('1111111111',response.data);
-                    self.fetchDataList(response.data[0])
+                    console.log('1111111111',response.data);
+                    self.fetchDataList(response.data[0]);
+                    self.setState({
+                        clickTree: response.data[0],
+                    })
                 });
             } else {
                 T.prompt.error(response.msg);

@@ -90,6 +90,7 @@ class CheckRecordList extends PureComponent {
 
         let self = this;
         let loginInfo = T.auth.getLoginInfo();
+        console.log('11111',loginInfo);
         let userId = loginInfo.data.user.id;
         new Promise((resolve, reject) => {
             dispatch({
