@@ -108,7 +108,6 @@ class CompanyPaper extends PureComponent {
 
     //获取当前页数数据
     fetchDataList = (eventData) => {
-        console.log(eventData,'eventData');
         const {dispatch, form} = this.props;
         const {currentPage, selectedArea} = this.state;
         let self = this;
@@ -225,9 +224,9 @@ class CompanyPaper extends PureComponent {
         this.setState({
             selectTreeKey: keys,
             selectedArea: eventData.name,
-            clickTree: eventData.dataRef,
+            clickTree: eventData,
         }, () => {
-            self.fetchDataList(eventData.dataRef)
+            self.fetchDataList(eventData)
         });
     };
 
@@ -248,7 +247,7 @@ class CompanyPaper extends PureComponent {
                         name={item.text}
                         title={item.text}
                         key={item.code}
-                        id={item.code}
+                        id={item.id}
                         backId={item.id}
                         pId={item.parentCode}
                         industryParentId={industryParentId}
@@ -263,7 +262,7 @@ class CompanyPaper extends PureComponent {
                 name={item.text}
                 title={item.text}
                 key={item.code}
-                id={item.code}
+                id={item.id}
                 backId={item.id}
                 isLeaf
                 pId={item.parentCode}
@@ -428,11 +427,11 @@ class CompanyPaper extends PureComponent {
                 dataIndex: 'companyName',
                 // width: '8%',
             },
-            {
+            /*{
                 title: '评定时间',
                 dataIndex: 'createTime',
                 // width: '8%',
-            },
+            },*/
 
             {
                 title: '操作',
