@@ -153,7 +153,7 @@ class CheckRecordList extends PureComponent {
                 let params = {
                     // paperAnswerStr:{
                         paperBasic:{
-                            id:paperBasic.hasOwnProperty('id')? paperBasic.id === null ? self.state.paperId: paperBasic.id : self.state.paperId,
+                            id:paperBasic.hasOwnProperty('id')? paperBasic.id === null ? self.state.paperId : paperBasic.id : self.state.paperId,
                             userId: userId,
                             // userId: 4,
                             // area: values.area,	//县市区名字
