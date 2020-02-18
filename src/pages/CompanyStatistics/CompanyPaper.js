@@ -338,7 +338,6 @@ class CompanyPaper extends PureComponent {
             params: {
                 isRouterPush: true,
                 data: key,
-                status:false
 
     },
         });
@@ -430,11 +429,6 @@ class CompanyPaper extends PureComponent {
                 // width: '8%',
             },
             {
-                title: '评定等级',
-                dataIndex: 'evaluateLevel',
-                // width: '8%',
-            },
-            {
                 title: '评定时间',
                 dataIndex: 'createTime',
                 // width: '8%',
@@ -483,7 +477,7 @@ class CompanyPaper extends PureComponent {
         // let apiHref = window.ENV.apiDomain + "/stat/export-stat-info?userId=" + loginInfo.data.user.id+"&areaId=" + sendParams.areaId + "&industryId=" + sendParams.industryId + "&companyId=" + sendParams.companyId  + "&startDay=" + formStart + "&endDay=" + formEnd;
         return (
             <PageHeaderWrapper
-                title="开工企业评定管理"
+                title="企业调查问卷管理"
                 isSpecialBreadcrumb={true}
             >
                 <Row gutter={24}>

@@ -79,9 +79,9 @@ export default {
             }
         },
         //查看详情页面
-        * fetchCompanyDetailByIdAction({id, resolve, reject}, {call, put}) {
+        * fetchCompanyDetailByIdAction({params, resolve, reject}, {call, put}) {
             try {
-                const response = yield call(fetchCompanyDetailById, id);
+                const response = yield call(fetchCompanyDetailById, params);
                 resolve(response);
             } catch (error) {
                 reject(error);

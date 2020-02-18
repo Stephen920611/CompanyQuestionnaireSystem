@@ -10,7 +10,7 @@ export default {
     'menu.jobStatistics': '行业健康信息填报统计',
     'menu.totalStatistics': '企业信息填报统计',
     // 'menu.companyStatistics': '企业信息填报查询类列表页',
-    'menu.companyStatistics': '开工企业评定管理',
+    'menu.companyStatistics': '企业调查问卷管理',
     'menu.industrialReport': '工业企业填报',
     'menu.industrialManage': '工业企业管理',
     'menu.addInfo': '信息管理',

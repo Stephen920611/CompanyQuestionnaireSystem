@@ -9,7 +9,7 @@ module.exports = {
   menu: {
     disableLocal: false,
   },
-  title: '开复工企业防疫措施落实情况调查问卷系统',
+  title: '企业调查问卷管理系统',
   pwa: false,
   // Your custom iconfont Symbol script Url
   // eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js

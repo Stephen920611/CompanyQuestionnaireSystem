@@ -27,8 +27,8 @@ export async function updateCompanyInfo(params={}) {
 }
 
 //获取详情接口fetchCompanyDetailById
-export async function fetchCompanyDetailById(id) {
-    return get(EnumAPI.fetchCompanyDetailById(id));
+export async function fetchCompanyDetailById (params={}) {
+    return get(EnumAPI.fetchCompanyDetailById,params);
 }
 
 //获取重点人员统计数据
