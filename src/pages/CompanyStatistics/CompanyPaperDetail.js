@@ -89,38 +89,26 @@ class CompanyPaperDetail extends PureComponent {
                         checkVal = val.index;
                     }
                 });
-                if(idx === 6){
                     return (
                         <Row className={styles.detailTitle}>
                             <Col span={24} className={styles.detailBtns}>
-                                    <span>{(idx+1) +'、'+ item.questionContent + ':'}</span>
-                                    {/*<span>
-                                        {
-                                            member.hasOwnProperty('companyName') ? member.companyName : '---'
+                                    <span>{(idx+1) +'、'+ item.questionContent + ':  '}</span>
+                                {
+                                    item.operationList.map( (val,idx) => {
+                                        if(val.isCheck){
+                                            return (
+                                                <span key={idx} value={val.index}>{val.value}</span>
+                                            )
                                         }
-                                    </span>*/}
+                                    })
+                                }
                             </Col>
                         </Row>
                     )
-
-                }else{
-                    return (
-                        <Row className={styles.detailTitle}>
-                            <Col span={24} className={styles.detailBtns}>
-                                    <span>{(idx+1) +'、'+ item.questionContent + ':'}</span>
-                                    {/*<span>
-                                        {
-                                            member.hasOwnProperty('companyName') ? member.companyName : '---'
-                                        }
-                                    </span>*/}
-                            </Col>
-                        </Row>
-                    )
-                }
 
             })
         )
-    }
+    };
 
     render() {
         const {fetchStatus, location} = this.props;
