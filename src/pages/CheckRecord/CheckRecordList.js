@@ -137,7 +137,7 @@ class CheckRecordList extends PureComponent {
                 let answerAry = [];
                 questionArray.map((item, index) => {
                     let name = 'question' + (index + 1);
-                    if(!T.lodash.isUndefined(values[name])&&values[name]!==''){
+                    if(!T.lodash.isUndefined(values[name])){
                         answerAry.push({
                             questionId: index + 1,
                             checkIndex: values[name]
@@ -145,8 +145,7 @@ class CheckRecordList extends PureComponent {
                     }
 
                 });
-        console.log('1111111',111111111111)
-                let sendParams = {
+                let params = {
                     // paperAnswerStr:{
                         paperBasic:{
                             id:self.state.paperId,
@@ -172,9 +171,10 @@ class CheckRecordList extends PureComponent {
                         answerAry:answerAry,
                     // }
                 };
-                let params = {
-                    paperAnswerStr:JSON.stringify(sendParams)
-                };
+                // let params = {
+                //     // paperAnswerStr:JSON.stringify(sendParams)
+                //     paperAnswerStr:sendParams
+                // };
                 new Promise((resolve, reject) => {
                     dispatch({
                         type: 'checkRecord/savePaperAction',
