@@ -286,7 +286,13 @@ class CompanyPaper extends PureComponent {
         const {clickTree} = this.state;
         const {dispatch, form} = this.props;
         e.preventDefault();
-        this.fetchDataList(clickTree);
+        let self = this;
+        this.setState({
+            currentPage: 1,
+        }, () => {
+            self.fetchDataList(clickTree);
+        });
+        // this.fetchDataList(clickTree);
     };
 
     //导出
