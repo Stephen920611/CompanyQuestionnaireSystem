@@ -81,6 +81,11 @@ class CheckRecordList extends PureComponent {
     }
 
     componentDidMount() {
+       this.fetchData();
+    }
+
+    //获取数据
+    fetchData = () => {
         const {dispatch, location} = this.props;
 
         let self = this;
@@ -119,9 +124,7 @@ class CheckRecordList extends PureComponent {
                 T.prompt.error(response.msg);
             }
         });
-
-
-    }
+    };
 
     //提交功能
     onSubmitData = (e) => {
