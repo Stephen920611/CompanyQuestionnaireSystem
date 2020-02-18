@@ -81,6 +81,11 @@ class CheckRecordList extends PureComponent {
     }
 
     componentDidMount() {
+       this.fetchData();
+    }
+
+    //获取数据
+    fetchData = () => {
         const {dispatch, location} = this.props;
 
         let self = this;
@@ -99,29 +104,29 @@ class CheckRecordList extends PureComponent {
             if (response.code === 0) {
                 self.setState({
                     question: response.data
+                }, () => {
+                    const{paperBasic} = response.data;
+                    let formValue = {
+                        companyName: T.lodash.isUndefined(paperBasic.companyName) ? '' : paperBasic.companyName,
+                        addressName: T.lodash.isUndefined(paperBasic.addressName) ? '' : paperBasic.addressName,
+                        phoneNumber: T.lodash.isUndefined(paperBasic.phoneNumber) ? '' : paperBasic.phoneNumber,
+                        reportUser: T.lodash.isUndefined(paperBasic.reportUser) ? '' : paperBasic.reportUser,
+                        registeredNum: T.lodash.isUndefined(paperBasic.registeredNum) ? '' : paperBasic.registeredNum,
+                        registeredNonlocalNum: T.lodash.isUndefined(paperBasic.registeredNonlocalNum) ? '' : paperBasic.registeredNonlocalNum,
+                        registeredHubeiNum: T.lodash.isUndefined(paperBasic.registeredHubeiNum) ? '' : paperBasic.registeredHubeiNum,
+                        onguardNum: T.lodash.isUndefined(paperBasic.onguardNum) ? '' : paperBasic.onguardNum,
+                        onguardNonlocalNum: T.lodash.isUndefined(paperBasic.onguardNonlocalNum) ? '' : paperBasic.onguardNonlocalNum,
+                        quarantineRoomNum: T.lodash.isUndefined(paperBasic.quarantineRoomNum) ? '' : paperBasic.quarantineRoomNum,
+                        propose: T.lodash.isUndefined(paperBasic.propose) ? '' : paperBasic.propose,
+                    };
+                    self.props.form.setFieldsValue(formValue);
                 });
-                const{paperBasic} = response.data;
-                let formValue = {
-                    companyName: T.lodash.isUndefined(paperBasic.companyName) ? '' : paperBasic.companyName,
-                    addressName: T.lodash.isUndefined(paperBasic.addressName) ? '' : paperBasic.addressName,
-                    phoneNumber: T.lodash.isUndefined(paperBasic.phoneNumber) ? '' : paperBasic.phoneNumber,
-                    reportUser: T.lodash.isUndefined(paperBasic.reportUser) ? '' : paperBasic.reportUser,
-                    registeredNum: T.lodash.isUndefined(paperBasic.registeredNum) ? '' : paperBasic.registeredNum,
-                    registeredNonlocalNum: T.lodash.isUndefined(paperBasic.registeredNonlocalNum) ? '' : paperBasic.registeredNonlocalNum,
-                    registeredHubeiNum: T.lodash.isUndefined(paperBasic.registeredHubeiNum) ? '' : paperBasic.registeredHubeiNum,
-                    onguardNum: T.lodash.isUndefined(paperBasic.onguardNum) ? '' : paperBasic.onguardNum,
-                    onguardNonlocalNum: T.lodash.isUndefined(paperBasic.onguardNonlocalNum) ? '' : paperBasic.onguardNonlocalNum,
-                    quarantineRoomNum: T.lodash.isUndefined(paperBasic.quarantineRoomNum) ? '' : paperBasic.quarantineRoomNum,
-                    propose: T.lodash.isUndefined(paperBasic.propose) ? '' : paperBasic.propose,
-                };
-                self.props.form.setFieldsValue(formValue);
+
             } else {
                 T.prompt.error(response.msg);
             }
         });
-
-
-    }
+    };
 
     //提交功能
     onSubmitData = (e) => {
@@ -184,7 +189,7 @@ class CheckRecordList extends PureComponent {
                     });
                 }).then(response => {
                     if (response.code === 0) {
-                        console.log('resss',response.data);
+                        // console.log('resss',response.data);
                         T.prompt.success("更新成功");
                         // self.resetForm();
                         self.setState({
@@ -239,6 +244,7 @@ class CheckRecordList extends PureComponent {
         })
 
     };
+    //渲染问卷内容
     renderQuestion = (data) => {
         const {
             fetchStatus,
@@ -249,74 +255,105 @@ class CheckRecordList extends PureComponent {
             formItemHalf,
         } = this.state;
         let self = this;
-        let checkVal = '';
         return (
             data.map((item, idx) => {
+                let checkVal = '';
                 item.operationList.map((val,index)=>{
                     if(val.isCheck){
                         checkVal = val.index;
                     }
                 });
-                if(idx === 6){
-                    return (
-                        <Row className={styles.detailTitle}>
-                            <Col span={24}>
-                                <Form.Item
-                                    {...formItemHalf}
-                                    label={(idx+1) +'、'+ item.questionContent}
-                                >
-                                    {getFieldDecorator('question' + item.id, {
-                                            rules: [
-                                                {
-                                                    required: true,
-                                                    message: "请选择",
-                                                },
-                                            ],
-                                            initialValue: checkVal,
-                                        }
-                                    )(
-                                        <Radio.Group>
-                                            <Radio value={1}>居家隔离</Radio>
-                                            <Radio value={2}>企业集中隔离</Radio>
-                                            <Radio value={3}>当地政府集中隔离</Radio>
-                                            <Radio value={4}>否</Radio>
-                                        </Radio.Group>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )
+                // if(idx === 6){
+                //     return (
+                //         <Row className={styles.detailTitle} key={idx}>
+                //             <Col span={24}>
+                //                 <Form.Item
+                //                     {...formItemHalf}
+                //                     label={(idx+1) +'、'+ item.questionContent}
+                //                 >
+                //                     {getFieldDecorator('question' + item.id, {
+                //                             rules: [
+                //                                 {
+                //                                     required: true,
+                //                                     message: "请选择",
+                //                                 },
+                //                             ],
+                //                             initialValue: checkVal,
+                //                         }
+                //                     )(
+                //                         <Radio.Group>
+                //                             <Radio value={1}>居家隔离</Radio>
+                //                             <Radio value={2}>企业集中隔离</Radio>
+                //                             <Radio value={3}>当地政府集中隔离</Radio>
+                //                             <Radio value={4}>否</Radio>
+                //                         </Radio.Group>
+                //                     )}
+                //                 </Form.Item>
+                //             </Col>
+                //         </Row>
+                //     )
+                //
+                // }else{
+                //     return (
+                //         <Row className={styles.detailTitle} key={idx}>
+                //             <Col span={24}>
+                //                 <Form.Item
+                //                     {...formItemHalf}
+                //                     label={(idx+1) +'、'+ item.questionContent}
+                //                 >
+                //                     {getFieldDecorator('question' + item.id, {
+                //                             rules: [
+                //                                 {
+                //                                     required: idx === 5 ? false:true,
+                //                                     message: "请选择",
+                //                                 },
+                //                             ],
+                //                             initialValue: checkVal,
+                //                         }
+                //                     )(
+                //                         <Radio.Group>
+                //                             {/*self.renderRadio(item.operationList)*/}
+                //                             <Radio value={1}>是</Radio>
+                //                             <Radio value={0}>否</Radio>
+                //                         </Radio.Group>
+                //                     )}
+                //                 </Form.Item>
+                //             </Col>
+                //         </Row>
+                //     )
+                // }
 
-                }else{
-                    return (
-                        <Row className={styles.detailTitle}>
-                            <Col span={24}>
-                                <Form.Item
-                                    {...formItemHalf}
-                                    label={(idx+1) +'、'+ item.questionContent}
-                                >
-                                    {getFieldDecorator('question' + item.id, {
-                                            rules: [
-                                                {
-                                                    required: idx === 5 ? false:true,
-                                                    message: "请选择",
-                                                },
-                                            ],
-                                            initialValue: checkVal,
+                return (
+                    <Row className={styles.detailTitle} key={idx}>
+                        <Col span={24}>
+                            <Form.Item
+                                {...formItemHalf}
+                                label={(idx+1) +'、'+ item.questionContent}
+                            >
+                                {getFieldDecorator('question' + item.id, {
+                                        rules: [
+                                            {
+                                                required: idx === 5 ? false:true,
+                                                message: "请选择",
+                                            },
+                                        ],
+                                        initialValue: checkVal,
+                                    }
+                                )(
+                                    <Radio.Group>
+                                        {
+                                            item.operationList.map( (val,idx) => {
+                                                return (
+                                                    <Radio key={idx} value={val.index}>{val.value}</Radio>
+                                                )
+                                            })
                                         }
-                                    )(
-                                        <Radio.Group>
-                                            {/*self.renderRadio(item.operationList)*/}
-                                            <Radio value={1}>是</Radio>
-                                            <Radio value={0}>否</Radio>
-                                        </Radio.Group>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )
-                }
-
+                                    </Radio.Group>
+                                )}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                )
             })
         )
     }
@@ -778,7 +815,6 @@ class CheckRecordList extends PureComponent {
                                 loading={fetchStatus}
                             >
                                 {this.renderQuestion(questionArray)}
-
                             </Card>
                             <div className={styles.detailTitleName}>
                                 二、对疫情防控工作的意见建议
