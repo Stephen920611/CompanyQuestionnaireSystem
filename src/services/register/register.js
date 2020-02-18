@@ -16,17 +16,17 @@ export async function fetchAllArea(params = {}) {
 
 //发送验证码
 export async function sendCode(params = {}) {
-    return get(EnumAPI.sendCode, params);
+    return get(EnumAPI.sendCode, params, {}, false, true);
 }
 
 //用户注册
 export async function userRegist(params = {}) {
-    return postJSON(EnumAPI.userRegist, params);
+    return postJSON(EnumAPI.userRegist, params, {}, false, false, true, true);
 }
 
 //重置密码
 export async function forgetUser(params = {}) {
-    return postJSON(EnumAPI.forgetUser, params);
+    return postJSON(EnumAPI.forgetUser, params, {}, false, false, true, true);
 }
 
 //退出登录
