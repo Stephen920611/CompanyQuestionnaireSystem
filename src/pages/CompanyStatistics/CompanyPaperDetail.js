@@ -57,7 +57,6 @@ class CompanyPaperDetail extends PureComponent {
                     reject,
                 });
             }).then(response => {
-                console.log('11111', response.data);
 
                 if (response.code === 0) {
                     self.setState({
@@ -92,7 +91,7 @@ class CompanyPaperDetail extends PureComponent {
                     return (
                         <Row className={styles.detailTitle}>
                             <Col span={24} className={styles.detailBtns}>
-                                    <span>{(idx+1) +'、'+ item.questionContent + ':  '}</span>
+                                    <span>{(idx+1) +'、'+ item.questionContent + ' :  '}</span>
                                 {
                                     item.operationList.map( (val,idx) => {
                                         if(val.isCheck){

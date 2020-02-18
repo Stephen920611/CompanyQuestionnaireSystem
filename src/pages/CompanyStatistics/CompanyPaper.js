@@ -427,11 +427,16 @@ class CompanyPaper extends PureComponent {
                 dataIndex: 'companyName',
                 // width: '8%',
             },
-            /*{
-                title: '评定时间',
-                dataIndex: 'createTime',
+            {
+                title: '更新时间',
+                dataIndex: 'updateTime',
                 // width: '8%',
-            },*/
+            },
+            {
+                title: '填报人',
+                dataIndex: 'reportUser',
+                // width: '8%',
+            },
 
             {
                 title: '操作',
