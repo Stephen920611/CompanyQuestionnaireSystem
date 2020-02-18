@@ -52,7 +52,8 @@ const EnumAPI = {
 
     fetchTreeNode: _processAPI('/area/area-tree'), //获取树接口
 
-    fetchCompanyStatistics: _processAPI('/evaluate/page'), //获取开工企业评定列表
+    // fetchCompanyStatistics: _processAPI('/evaluate/page'), //获取开工企业评定列表
+    fetchCompanyStatistics: _processAPI('/paperBasic/select-paper'), //获取问卷列表
     deleteCompanyInfo: (id) => processDataList('/evaluate/delete/' + id), //删除企业填报
     updateCompanyInfo: _processAPI('/evaluate/update'), //同步某个企业填报
     saveCompanyInfo: _processAPI('/evaluate/save'), //同步某个企业填报

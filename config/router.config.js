@@ -66,12 +66,12 @@ export default [
                 path: '/companyStatistics',
                 name: 'companyStatistics',
                 icon: 'home',
-                component: './CompanyStatistics/CompanyStatistics',
+                component: './CompanyStatistics/CompanyPaper',
                 authority: ['admin']
             },
             {
                 path: '/companyStatistics/showDetail',
-                component: './CompanyStatistics/CompanyStatisticsDetail',
+                component: './CompanyStatistics/CompanyPaperDetail',
                 authority: ['admin']
             },
             {
