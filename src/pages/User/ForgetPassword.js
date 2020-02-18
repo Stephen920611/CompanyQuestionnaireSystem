@@ -102,9 +102,9 @@ class ForgetPassword extends Component {
                     });
                 }).then(response => {
                     if (response.code === 0) {
-                        form.setFieldsValue({
-                            phone: response.msg,
-                        });
+                        // form.setFieldsValue({
+                        //     captcha: response.msg,
+                        // });
                         self.setState({
                             codeBack: response.msg
                         })
