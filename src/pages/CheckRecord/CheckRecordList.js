@@ -817,7 +817,7 @@ class CheckRecordList extends PureComponent {
                                 {this.renderQuestion(questionArray)}
                             </Card>
                             <div className={styles.detailTitleName}>
-                                二、对疫情防控工作的意见建议
+                                三、对疫情防控工作的意见建议
                             </div>
                             <Card
                                 style={{marginBottom: 20}}

@@ -43,7 +43,7 @@ class CompanyPaperDetail extends PureComponent {
             /*self.setState({
                 industryId: location["params"]["data"]['industryId']
             });*/
-            console.log(location["params"]["data"]);
+            // console.log(location["params"]["data"]);
             let loginInfo = T.auth.getLoginInfo();
             let userId = loginInfo.data.user.id;
             new Promise((resolve, reject) => {
@@ -245,7 +245,7 @@ class CompanyPaperDetail extends PureComponent {
 
                         </Card>
                         <div className={styles.detailTitleName}>
-                            二、对疫情防控工作的意见建议
+                            三、对疫情防控工作的意见建议
                         </div>
                         <Card
                             style={{marginBottom: 20}}
